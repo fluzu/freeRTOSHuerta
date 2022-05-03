@@ -1,0 +1,13 @@
+../Core/Src/main.c:80:5:main	64	static
+../Core/Src/main.c:192:6:StartDefaultTask	16	static
+../Core/Src/main.c:206:6:APP_Timer10ms	4	static
+../Core/Src/main.c:209:6:APP_Timer100ms	4	static
+../Core/Src/main.c:212:6:APP_Timer1000ms	4	static
+../Core/Src/main.c:215:6:APP_Timer10s	4	static
+../Core/Src/main.c:218:6:APP_Show_SystemIntro	8	static
+../Core/Src/main.c:228:6:APP_Keypad	24	static
+../Core/Src/main.c:232:6:APP_Show_DHT22	8	static
+../Core/Src/main.c:239:6:APP_Show_Movement	8	static
+../Core/Src/main.c:243:6:APP_CoverFromTemperature	16	static
+../Core/Src/main.c:247:6:APP_Show_SoilHumidity	8	static
+../Core/Src/main.c:251:6:APP_Irrigation	16	static
