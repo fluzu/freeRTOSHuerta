@@ -56,6 +56,10 @@ void *DriverValve_IN2;
 extern DHT_DataTypeDef DHT22;
 
 osThreadId defaultTaskHandle;
+osThreadId Task1Handle;
+osThreadId Task2Handle;
+osThreadId Task3Handle;
+osThreadId Task4Handle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -63,6 +67,10 @@ osThreadId defaultTaskHandle;
 /* Private function prototypes -----------------------------------------------*/
 
 void StartDefaultTask(void const * argument);
+void StartTask1(void const * argument);
+void StartTask2(void const * argument);
+void StartTask3(void const * argument, int rangohmin, int rangohmax);
+void StartTask4(void const * argument, int rangohmin, int rangohmax, int estado_cortina, int cortina_manual);
 
 /* USER CODE BEGIN PFP */
 
@@ -130,8 +138,20 @@ int main(void)
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  osThreadDef(Task1, StartTask1, osPriorityBelowNormal, 0, 128);
+  Task1Handle = osThreadCreate(osThread(Task1), NULL);
+
+  osThreadDef(Task2, StartTask2, osPriorityAboveNormal, 0, 128);
+  Task2Handle = osThreadCreate(osThread(Task2), NULL);
+
+  osThreadDef(Task3, StartTask3, osPriorityNormal, 0, 128);
+  Task3Handle = osThreadCreate(osThread(Task3), NULL);
+
+  osThreadDef(Task4, StartTask4, osPriorityHigh, 0, 128);
+   Task4Handle = osThreadCreate(osThread(Task4), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
@@ -145,17 +165,17 @@ int main(void)
     /* USER CODE END WHILE */
       //htim2.Instance->CCR1 = 50; //ANGULO 45 GRADOS REVISAR SI NO ROME SERVO ESTANDO EN BUCLE
 ///Teclado
-      APP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual);
+ //     APP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual);
 ///DHT22
-      APP_Show_DHT22();
+ //     APP_Show_DHT22();
 ///Sensor humedad de suelo
-      APP_Show_SoilHumidity();
+  //    APP_Show_SoilHumidity();
       ///Sensor movimiento
-      APP_Show_Movement();
+  //    APP_Show_Movement();
 ///Cerrar o abrir cortina por temperatura
-      APP_CoverFromTemperature(estado_cortina, cortina_manual);
+  //    APP_CoverFromTemperature(estado_cortina, cortina_manual);
 ///Valvula solenoide riego
-      APP_Irrigation(rangohmin, rangohmax);
+ //     APP_Irrigation(rangohmin, rangohmax);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -192,18 +212,54 @@ int main(void)
 void StartDefaultTask(void const * argument)
 {
   /* USER CODE BEGIN 5 */
+	DHT_GetData(&DHT22);
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+
+    osDelay(2000);
   }
   /* USER CODE END 5 */
 }
 
+void StartTask1(void const * argument){
+
+	while(1){
+		LCD_Clear();
+	    BSP_LCD_Temperature(DHT22.Temperature);
+	    BSP_LCD_Humidity(DHT22.Humidity);
+	    BSP_Show_SoilHumidity();
+		osDelay(2000);
+	}
+}
+
+void StartTask2(void const * argument){
+
+	while(1){
+		APP_Show_Movement();
+		osDelay(1000);
+	}
+}
+
+void StartTask3(void const * argument, int rangohmin, int rangohmax){
+
+	while(1){
+		//APP_Irrigation(rangohmin, rangohmax);
+		osDelay(2000);
+	}
+}
+
+void StartTask4(void const * argument, int rangohmin, int rangohmax, int estado_cortina, int cortina_manual){
+
+	while(1){
+
+		APP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual);
+		osDelay(2000);
+	}
+}
 
 
-
-void APP_Timer10ms(){
+void APP_Timer10ms(){ //Borrar
 
 }
 void APP_Timer100ms(){

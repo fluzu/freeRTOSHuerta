@@ -1,0 +1,10 @@
+13:08:25 **** Incremental Build of configuration Debug for project TestLCDi2c ****
+make -j4 all 
+arm-none-eabi-size   TestLCDi2c.elf 
+   text	   data	    bss	    dec	    hex	filename
+  31488	    128	   2600	  34216	   85a8	TestLCDi2c.elf
+Finished building: default.size.stdout
+ 
+
+13:08:26 Build Finished. 0 errors, 0 warnings. (took 938ms)
+

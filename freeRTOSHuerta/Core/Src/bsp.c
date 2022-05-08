@@ -119,8 +119,8 @@ void BSP_Detect_Movement(){
         LCD_Clear();
         LCD_SetCursor(2, 4);
         LCD_Print("Movimiento", 1);   // Durante toda la espera con cortina cerrada?
-        HAL_Delay(1000);
-        LCD_Clear();
+        //HAL_Delay(1000);
+        //LCD_Clear();
 
 //        if (estado_cortina == 0 && cortina_manual == 0) {        //flag para ver si la cortina esta abierta o cerrada  REVISAR cortina manual
 //            HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
@@ -183,7 +183,7 @@ void BSP_Show_SoilHumidity(){
     LCD_SetCursor(2, 10);
     LCD_Print("HS:%0.0f%%", value_adc[0]);  //REVISAR
 
-    HAL_Delay(3000);
+    //HAL_Delay(3000);
     //LCD_Clear();
 }
 

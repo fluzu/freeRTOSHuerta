@@ -1,0 +1,367 @@
+22:06:35 **** Incremental Build of configuration Debug for project Huerta freeRTOS ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/bsp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/bsp.d" -MT"Core/Src/bsp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/bsp.o"
+arm-none-eabi-gcc "../Core/Src/lcd_i2cModule.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/lcd_i2cModule.d" -MT"Core/Src/lcd_i2cModule.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd_i2cModule.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_timebase_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_hal_timebase_tim.d" -MT"Core/Src/stm32f4xx_hal_timebase_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_timebase_tim.o"
+In file included from ../Core/Src/lcd_i2cModule.c:11:
+../Core/Inc/lcd_userConf.h:18:1: error: unknown type name 'I2C_HandleTypeDef'; did you mean 'TIM_HandleTypeDef'?
+   18 | I2C_HandleTypeDef hi2cx;
+      | ^~~~~~~~~~~~~~~~~
+      | TIM_HandleTypeDef
+../Core/Inc/lcd_userConf.h:19:8: error: unknown type name 'I2C_HandleTypeDef'
+   19 | extern I2C_HandleTypeDef hi2c1; //* Change "hi2c1" like hi2c2, hi2c3... according to which i2c type(i2c1,i2c2...) you use, default is hi2c1.
+      |        ^~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:12:1: error: unknown type name 'ADC_HandleTypeDef'; did you mean 'TIM_HandleTypeDef'?
+   12 | ADC_HandleTypeDef hadc1;
+      | ^~~~~~~~~~~~~~~~~
+      | TIM_HandleTypeDef
+../Core/Src/bsp.c:14:1: error: unknown type name 'I2C_HandleTypeDef'; did you mean 'TIM_HandleTypeDef'?
+   14 | I2C_HandleTypeDef hi2c1;
+      | ^~~~~~~~~~~~~~~~~
+      | TIM_HandleTypeDef
+../Core/Src/bsp.c:15:1: error: unknown type name 'RTC_HandleTypeDef'; did you mean 'TIM_HandleTypeDef'?
+   15 | RTC_HandleTypeDef hrtc;
+      | ^~~~~~~~~~~~~~~~~
+      | TIM_HandleTypeDef
+../Core/Src/bsp.c: In function 'HAL_TIM_PeriodElapsedCallback':
+../Core/Src/bsp.c:59:13: warning: implicit declaration of function 'APP_Timer100ms' [-Wimplicit-function-declaration]
+   59 |             APP_Timer100ms();
+      |             ^~~~~~~~~~~~~~
+../Core/Src/lcd_i2cModule.c: In function 'LCD_i2cDeviceCheck':
+../Core/Src/lcd_i2cModule.c:79:9: warning: implicit declaration of function 'HAL_I2C_IsDeviceReady' [-Wimplicit-function-declaration]
+   79 |  while (HAL_I2C_IsDeviceReady(&hi2cx, i2cDeviceAddr, 3, 1000) != HAL_OK)
+      |         ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:68:13: warning: implicit declaration of function 'APP_Timer10ms' [-Wimplicit-function-declaration]
+   68 |             APP_Timer10ms();
+      |             ^~~~~~~~~~~~~
+../Core/Src/lcd_i2cModule.c: In function 'LCD_Set_Command':
+../Core/Src/lcd_i2cModule.c:104:2: warning: implicit declaration of function 'HAL_I2C_Master_Transmit' [-Wimplicit-function-declaration]
+  104 |  HAL_I2C_Master_Transmit(&hi2cx, i2cDeviceAddr, (uint8_t*)data, 4, 200);
+      |  ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/lcd_i2cModule.c: In function 'LCD_Print':
+../Core/Src/lcd_i2cModule.c:226:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  226 |  sprintf(data_ch, ch, value);
+      |  ^~~~~~~
+../Core/Src/lcd_i2cModule.c:226:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/lcd_i2cModule.c:13:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   12 | #include <string.h>
+  +++ |+#include <stdio.h>
+   13 | 
+../Core/Src/bsp.c:75:13: warning: implicit declaration of function 'APP_Timer1000ms' [-Wimplicit-function-declaration]
+   75 |             APP_Timer1000ms();
+      |             ^~~~~~~~~~~~~~~
+../Core/Src/bsp.c:82:13: warning: implicit declaration of function 'APP_Timer10s' [-Wimplicit-function-declaration]
+   82 |             APP_Timer10s();
+      |             ^~~~~~~~~~~~
+../Core/Src/bsp.c: In function 'BSP_Show_SoilHumidity':
+../Core/Src/bsp.c:176:5: warning: implicit declaration of function 'HAL_ADC_Start'; did you mean 'HAL_DMA_Start'? [-Wimplicit-function-declaration]
+  176 |     HAL_ADC_Start(&hadc1);
+      |     ^~~~~~~~~~~~~
+      |     HAL_DMA_Start
+../Core/Src/bsp.c:177:8: warning: implicit declaration of function 'HAL_ADC_PollForConversion' [-Wimplicit-function-declaration]
+  177 |     if(HAL_ADC_PollForConversion(&hadc1, 5) == HAL_OK){     //incilur esta parte en el solenoide para hecr while?
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:178:24: warning: implicit declaration of function 'HAL_ADC_GetValue' [-Wimplicit-function-declaration]
+  178 |         value_adc[0] = HAL_ADC_GetValue(&hadc1);
+      |                        ^~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:180:9: warning: implicit declaration of function 'HAL_ADC_Stop'; did you mean 'HAL_TIM_IC_Stop'? [-Wimplicit-function-declaration]
+  180 |         HAL_ADC_Stop(&hadc1);
+      |         ^~~~~~~~~~~~
+      |         HAL_TIM_IC_Stop
+../Core/Src/bsp.c: In function 'MX_ADC1_Init':
+../Core/Src/bsp.c:462:5: error: unknown type name 'ADC_ChannelConfTypeDef'; did you mean 'ADC_Common_TypeDef'?
+  462 |     ADC_ChannelConfTypeDef sConfig = {0};
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+      |     ADC_Common_TypeDef
+../Core/Src/bsp.c:469:10: error: request for member 'Instance' in something not a structure or union
+  469 |     hadc1.Instance = ADC1;
+      |          ^
+../Core/Src/bsp.c:470:10: error: request for member 'Init' in something not a structure or union
+  470 |     hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+      |          ^
+../Core/Src/bsp.c:470:33: error: 'ADC_CLOCK_SYNC_PCLK_DIV2' undeclared (first use in this function); did you mean 'ADC_CLOCKPRESCALER_PCLK_DIV2'?
+  470 |     hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~
+      |                                 ADC_CLOCKPRESCALER_PCLK_DIV2
+../Core/Src/bsp.c:470:33: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/bsp.c:471:10: error: request for member 'Init' in something not a structure or union
+  471 |     hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+      |          ^
+../Core/Src/bsp.c:471:29: error: 'ADC_RESOLUTION_12B' undeclared (first use in this function); did you mean 'ADC_RESOLUTION12b'?
+  471 |     hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+      |                             ^~~~~~~~~~~~~~~~~~
+      |                             ADC_RESOLUTION12b
+../Core/Src/bsp.c:472:10: error: request for member 'Init' in something not a structure or union
+  472 |     hadc1.Init.ScanConvMode = ENABLE;
+      |          ^
+../Core/Src/bsp.c:473:10: error: request for member 'Init' in something not a structure or union
+  473 |     hadc1.Init.ContinuousConvMode = DISABLE;
+      |          ^
+../Core/Src/bsp.c:474:10: error: request for member 'Init' in something not a structure or union
+  474 |     hadc1.Init.DiscontinuousConvMode = DISABLE;
+      |          ^
+../Core/Src/bsp.c:475:10: error: request for member 'Init' in something not a structure or union
+  475 |     hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+      |          ^
+make: *** [Core/Src/subdir.mk:58: Core/Src/lcd_i2cModule.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/bsp.c:475:39: error: 'ADC_EXTERNALTRIGCONVEDGE_NONE' undeclared (first use in this function); did you mean 'ADC_EXTERNALTRIG_EDGE_NONE'?
+  475 |     hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+      |                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                       ADC_EXTERNALTRIG_EDGE_NONE
+../Core/Src/bsp.c:476:10: error: request for member 'Init' in something not a structure or union
+  476 |     hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+      |          ^
+../Core/Src/bsp.c:476:35: error: 'ADC_SOFTWARE_START' undeclared (first use in this function)
+  476 |     hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+      |                                   ^~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:477:10: error: request for member 'Init' in something not a structure or union
+  477 |     hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+      |          ^
+../Core/Src/bsp.c:477:28: error: 'ADC_DATAALIGN_RIGHT' undeclared (first use in this function)
+  477 |     hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+      |                            ^~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:478:10: error: request for member 'Init' in something not a structure or union
+  478 |     hadc1.Init.NbrOfConversion = 1;
+      |          ^
+../Core/Src/bsp.c:479:10: error: request for member 'Init' in something not a structure or union
+  479 |     hadc1.Init.DMAContinuousRequests = DISABLE;
+      |          ^
+../Core/Src/bsp.c:480:10: error: request for member 'Init' in something not a structure or union
+  480 |     hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+      |          ^
+../Core/Src/bsp.c:480:31: error: 'ADC_EOC_SINGLE_CONV' undeclared (first use in this function); did you mean 'EOC_SINGLE_CONV'?
+  480 |     hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+      |                               ^~~~~~~~~~~~~~~~~~~
+      |                               EOC_SINGLE_CONV
+../Core/Src/bsp.c:481:9: warning: implicit declaration of function 'HAL_ADC_Init'; did you mean 'HAL_DeInit'? [-Wimplicit-function-declaration]
+  481 |     if (HAL_ADC_Init(&hadc1) != HAL_OK)
+      |         ^~~~~~~~~~~~
+      |         HAL_DeInit
+../Core/Src/bsp.c:487:12: error: request for member 'Channel' in something not a structure or union
+  487 |     sConfig.Channel = ADC_CHANNEL_1;
+      |            ^
+../Core/Src/bsp.c:487:23: error: 'ADC_CHANNEL_1' undeclared (first use in this function); did you mean 'DAC2_CHANNEL_1'?
+  487 |     sConfig.Channel = ADC_CHANNEL_1;
+      |                       ^~~~~~~~~~~~~
+      |                       DAC2_CHANNEL_1
+../Core/Src/bsp.c:488:12: error: request for member 'Rank' in something not a structure or union
+  488 |     sConfig.Rank = 1;
+      |            ^
+../Core/Src/bsp.c:489:12: error: request for member 'SamplingTime' in something not a structure or union
+  489 |     sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+      |            ^
+../Core/Src/bsp.c:489:28: error: 'ADC_SAMPLETIME_3CYCLES' undeclared (first use in this function); did you mean 'ADC_SAMPLETIME_2CYCLE_5'?
+  489 |     sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+      |                            ADC_SAMPLETIME_2CYCLE_5
+../Core/Src/bsp.c:490:9: warning: implicit declaration of function 'HAL_ADC_ConfigChannel'; did you mean 'HAL_TIM_IC_ConfigChannel'? [-Wimplicit-function-declaration]
+  490 |     if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+      |         ^~~~~~~~~~~~~~~~~~~~~
+      |         HAL_TIM_IC_ConfigChannel
+../Core/Src/bsp.c: In function 'MX_I2C1_Init':
+../Core/Src/bsp.c:515:10: error: request for member 'Instance' in something not a structure or union
+  515 |     hi2c1.Instance = I2C1;
+      |          ^
+../Core/Src/bsp.c:516:10: error: request for member 'Init' in something not a structure or union
+  516 |     hi2c1.Init.ClockSpeed = 100000;
+      |          ^
+../Core/Src/bsp.c:517:10: error: request for member 'Init' in something not a structure or union
+  517 |     hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+      |          ^
+../Core/Src/bsp.c:517:28: error: 'I2C_DUTYCYCLE_2' undeclared (first use in this function)
+  517 |     hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+      |                            ^~~~~~~~~~~~~~~
+../Core/Src/bsp.c:518:10: error: request for member 'Init' in something not a structure or union
+  518 |     hi2c1.Init.OwnAddress1 = 0;
+      |          ^
+../Core/Src/bsp.c:519:10: error: request for member 'Init' in something not a structure or union
+  519 |     hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+      |          ^
+../Core/Src/bsp.c:519:33: error: 'I2C_ADDRESSINGMODE_7BIT' undeclared (first use in this function)
+  519 |     hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:520:10: error: request for member 'Init' in something not a structure or union
+  520 |     hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+      |          ^
+../Core/Src/bsp.c:520:34: error: 'I2C_DUALADDRESS_DISABLE' undeclared (first use in this function); did you mean 'I2C_DUALADDRESS_DISABLED'?
+  520 |     hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~
+      |                                  I2C_DUALADDRESS_DISABLED
+../Core/Src/bsp.c:521:10: error: request for member 'Init' in something not a structure or union
+  521 |     hi2c1.Init.OwnAddress2 = 0;
+      |          ^
+../Core/Src/bsp.c:522:10: error: request for member 'Init' in something not a structure or union
+  522 |     hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+      |          ^
+../Core/Src/bsp.c:522:34: error: 'I2C_GENERALCALL_DISABLE' undeclared (first use in this function); did you mean 'I2C_GENERALCALL_DISABLED'?
+  522 |     hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~
+      |                                  I2C_GENERALCALL_DISABLED
+../Core/Src/bsp.c:523:10: error: request for member 'Init' in something not a structure or union
+  523 |     hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+      |          ^
+../Core/Src/bsp.c:523:32: error: 'I2C_NOSTRETCH_DISABLE' undeclared (first use in this function); did you mean 'I2C_NOSTRETCH_DISABLED'?
+  523 |     hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+      |                                ^~~~~~~~~~~~~~~~~~~~~
+      |                                I2C_NOSTRETCH_DISABLED
+../Core/Src/bsp.c:524:9: warning: implicit declaration of function 'HAL_I2C_Init'; did you mean 'HAL_DMA_Init'? [-Wimplicit-function-declaration]
+  524 |     if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+      |         ^~~~~~~~~~~~
+      |         HAL_DMA_Init
+../Core/Src/bsp.c: In function 'MX_RTC_Init':
+../Core/Src/bsp.c:546:5: error: unknown type name 'RTC_TimeTypeDef'; did you mean 'RTC_TypeDef'?
+  546 |     RTC_TimeTypeDef sTime = {0};
+      |     ^~~~~~~~~~~~~~~
+      |     RTC_TypeDef
+../Core/Src/bsp.c:547:5: error: unknown type name 'RTC_DateTypeDef'; did you mean 'DHT_DataTypeDef'?
+  547 |     RTC_DateTypeDef sDate = {0};
+      |     ^~~~~~~~~~~~~~~
+      |     DHT_DataTypeDef
+../Core/Src/bsp.c:548:5: error: unknown type name 'RTC_AlarmTypeDef'; did you mean 'RTC_TypeDef'?
+  548 |     RTC_AlarmTypeDef sAlarm = {0};
+      |     ^~~~~~~~~~~~~~~~
+      |     RTC_TypeDef
+../Core/Src/bsp.c:555:9: error: request for member 'Instance' in something not a structure or union
+  555 |     hrtc.Instance = RTC;
+      |         ^
+../Core/Src/bsp.c:556:9: error: request for member 'Init' in something not a structure or union
+  556 |     hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
+      |         ^
+../Core/Src/bsp.c:556:28: error: 'RTC_HOURFORMAT_24' undeclared (first use in this function)
+  556 |     hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
+      |                            ^~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:557:9: error: request for member 'Init' in something not a structure or union
+  557 |     hrtc.Init.AsynchPrediv = 127;
+      |         ^
+../Core/Src/bsp.c:558:9: error: request for member 'Init' in something not a structure or union
+  558 |     hrtc.Init.SynchPrediv = 255;
+      |         ^
+../Core/Src/bsp.c:559:9: error: request for member 'Init' in something not a structure or union
+  559 |     hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+      |         ^
+../Core/Src/bsp.c:559:24: error: 'RTC_OUTPUT_DISABLE' undeclared (first use in this function)
+  559 |     hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+      |                        ^~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:560:9: error: request for member 'Init' in something not a structure or union
+  560 |     hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+      |         ^
+../Core/Src/bsp.c:560:32: error: 'RTC_OUTPUT_POLARITY_HIGH' undeclared (first use in this function)
+  560 |     hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+      |                                ^~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:561:9: error: request for member 'Init' in something not a structure or union
+  561 |     hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+      |         ^
+../Core/Src/bsp.c:561:28: error: 'RTC_OUTPUT_TYPE_OPENDRAIN' undeclared (first use in this function)
+  561 |     hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:562:9: warning: implicit declaration of function 'HAL_RTC_Init'; did you mean 'MX_RTC_Init'? [-Wimplicit-function-declaration]
+  562 |     if (HAL_RTC_Init(&hrtc) != HAL_OK)
+      |         ^~~~~~~~~~~~
+      |         MX_RTC_Init
+../Core/Src/bsp.c:573:10: error: request for member 'Hours' in something not a structure or union
+  573 |     sTime.Hours = 23;
+      |          ^
+../Core/Src/bsp.c:574:10: error: request for member 'Minutes' in something not a structure or union
+  574 |     sTime.Minutes = 59;
+      |          ^
+../Core/Src/bsp.c:575:10: error: request for member 'Seconds' in something not a structure or union
+  575 |     sTime.Seconds = 45;
+      |          ^
+../Core/Src/bsp.c:576:10: error: request for member 'DayLightSaving' in something not a structure or union
+  576 |     sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+      |          ^
+../Core/Src/bsp.c:576:28: error: 'RTC_DAYLIGHTSAVING_NONE' undeclared (first use in this function)
+  576 |     sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:577:10: error: request for member 'StoreOperation' in something not a structure or union
+  577 |     sTime.StoreOperation = RTC_STOREOPERATION_RESET;
+      |          ^
+../Core/Src/bsp.c:577:28: error: 'RTC_STOREOPERATION_RESET' undeclared (first use in this function)
+  577 |     sTime.StoreOperation = RTC_STOREOPERATION_RESET;
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:578:9: warning: implicit declaration of function 'HAL_RTC_SetTime' [-Wimplicit-function-declaration]
+  578 |     if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK)
+      |         ^~~~~~~~~~~~~~~
+../Core/Src/bsp.c:578:40: error: 'RTC_FORMAT_BIN' undeclared (first use in this function); did you mean 'FORMAT_BIN'?
+  578 |     if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK)
+      |                                        ^~~~~~~~~~~~~~
+      |                                        FORMAT_BIN
+../Core/Src/bsp.c:582:10: error: request for member 'WeekDay' in something not a structure or union
+  582 |     sDate.WeekDay = RTC_WEEKDAY_WEDNESDAY;
+      |          ^
+../Core/Src/bsp.c:582:21: error: 'RTC_WEEKDAY_WEDNESDAY' undeclared (first use in this function)
+  582 |     sDate.WeekDay = RTC_WEEKDAY_WEDNESDAY;
+      |                     ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:583:10: error: request for member 'Month' in something not a structure or union
+  583 |     sDate.Month = RTC_MONTH_OCTOBER;
+      |          ^
+../Core/Src/bsp.c:583:19: error: 'RTC_MONTH_OCTOBER' undeclared (first use in this function)
+  583 |     sDate.Month = RTC_MONTH_OCTOBER;
+      |                   ^~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:584:10: error: request for member 'Date' in something not a structure or union
+  584 |     sDate.Date = 28;
+      |          ^
+../Core/Src/bsp.c:585:10: error: request for member 'Year' in something not a structure or union
+  585 |     sDate.Year = 0;
+      |          ^
+../Core/Src/bsp.c:587:9: warning: implicit declaration of function 'HAL_RTC_SetDate' [-Wimplicit-function-declaration]
+  587 |     if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK)
+      |         ^~~~~~~~~~~~~~~
+../Core/Src/bsp.c:593:11: error: request for member 'AlarmTime' in something not a structure or union
+  593 |     sAlarm.AlarmTime.Hours = 0;
+      |           ^
+../Core/Src/bsp.c:594:11: error: request for member 'AlarmTime' in something not a structure or union
+  594 |     sAlarm.AlarmTime.Minutes = 0;
+      |           ^
+../Core/Src/bsp.c:595:11: error: request for member 'AlarmTime' in something not a structure or union
+  595 |     sAlarm.AlarmTime.Seconds = 0;
+      |           ^
+../Core/Src/bsp.c:596:11: error: request for member 'AlarmTime' in something not a structure or union
+  596 |     sAlarm.AlarmTime.SubSeconds = 0;
+      |           ^
+../Core/Src/bsp.c:597:11: error: request for member 'AlarmTime' in something not a structure or union
+  597 |     sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+      |           ^
+../Core/Src/bsp.c:598:11: error: request for member 'AlarmTime' in something not a structure or union
+  598 |     sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
+      |           ^
+../Core/Src/bsp.c:599:11: error: request for member 'AlarmMask' in something not a structure or union
+  599 |     sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
+      |           ^
+../Core/Src/bsp.c:599:24: error: 'RTC_ALARMMASK_NONE' undeclared (first use in this function)
+  599 |     sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
+      |                        ^~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:600:11: error: request for member 'AlarmSubSecondMask' in something not a structure or union
+  600 |     sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
+      |           ^
+../Core/Src/bsp.c:600:33: error: 'RTC_ALARMSUBSECONDMASK_ALL' undeclared (first use in this function); did you mean 'RTC_ALARMSUBSECONDMASK_None'?
+  600 |     sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                 RTC_ALARMSUBSECONDMASK_None
+../Core/Src/bsp.c:601:11: error: request for member 'AlarmDateWeekDaySel' in something not a structure or union
+  601 |     sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
+      |           ^
+../Core/Src/bsp.c:601:34: error: 'RTC_ALARMDATEWEEKDAYSEL_DATE' undeclared (first use in this function)
+  601 |     sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bsp.c:602:11: error: request for member 'AlarmDateWeekDay' in something not a structure or union
+  602 |     sAlarm.AlarmDateWeekDay = 1;
+      |           ^
+../Core/Src/bsp.c:603:11: error: request for member 'Alarm' in something not a structure or union
+  603 |     sAlarm.Alarm = RTC_ALARM_A;
+      |           ^
+../Core/Src/bsp.c:603:20: error: 'RTC_ALARM_A' undeclared (first use in this function); did you mean 'RTC_ALRMAR_PM'?
+  603 |     sAlarm.Alarm = RTC_ALARM_A;
+      |                    ^~~~~~~~~~~
+      |                    RTC_ALRMAR_PM
+../Core/Src/bsp.c:604:9: warning: implicit declaration of function 'HAL_RTC_SetAlarm_IT'; did you mean 'HAL_DMA_Start_IT'? [-Wimplicit-function-declaration]
+  604 |     if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN) != HAL_OK)
+      |         ^~~~~~~~~~~~~~~~~~~
+      |         HAL_DMA_Start_IT
+make: *** [Core/Src/subdir.mk:58: Core/Src/bsp.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+
+22:06:39 Build Failed. 89 errors, 19 warnings. (took 3s.476ms)
+
