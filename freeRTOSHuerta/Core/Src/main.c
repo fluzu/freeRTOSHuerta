@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "queue.h"
 #include "bsp.h"
 #include "lcd_i2cModule.h"
 #include "DHT.h"
@@ -60,6 +61,8 @@ osThreadId Task1Handle;
 osThreadId Task2Handle;
 osThreadId Task3Handle;
 osThreadId Task4Handle;
+
+osMessageQId Queue1Handle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -69,8 +72,8 @@ osThreadId Task4Handle;
 void StartDefaultTask(void const * argument);
 void StartTask1(void const * argument);
 void StartTask2(void const * argument);
-void StartTask3(void const * argument, int rangohmin, int rangohmax);
-void StartTask4(void const * argument, int rangohmin, int rangohmax, int estado_cortina, int cortina_manual);
+void StartTask3(void const * argument);
+void StartTask4(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -111,10 +114,7 @@ int main(void)
   /* Initialize all configured peripherals */
 
   /* USER CODE BEGIN 2 */
-  int estado_cortina = 0;
-  int cortina_manual = 0;        //bandera si se presiona de manera manual la cortina
-  int rangohmin = 50;
-  int rangohmax = 60;            //REVISAR RANGO INICIAL DE HUMEDAD
+
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -131,6 +131,7 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+  Queue1Handle = xQueueCreate(4, sizeof(int));
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -212,12 +213,12 @@ int main(void)
 void StartDefaultTask(void const * argument)
 {
   /* USER CODE BEGIN 5 */
-	DHT_GetData(&DHT22);
+	//DHT_GetData(&DHT22);
   /* Infinite loop */
   for(;;)
   {
 
-    osDelay(2000);
+   // osDelay(2000);
   }
   /* USER CODE END 5 */
 }
@@ -241,20 +242,36 @@ void StartTask2(void const * argument){
 	}
 }
 
-void StartTask3(void const * argument, int rangohmin, int rangohmax){
+void StartTask3(void const * argument){
+
+	int rangohmin;				//Hace falta poner static???????????????????????
+	int rangohmax;
 
 	while(1){
-		//APP_Irrigation(rangohmin, rangohmax);
+		xQueueReceive(Queue1Handle, &rangohmin, 1000);
+		xQueueReceive(Queue1Handle, &rangohmax, 1000);
+		//APP_Irrigation(rangohmin, rangohmax);   //Funciona valor recibido por la queue???????????????
 		osDelay(2000);
 	}
 }
 
-void StartTask4(void const * argument, int rangohmin, int rangohmax, int estado_cortina, int cortina_manual){
+void StartTask4(void const * argument){
+
+	int estado_cortina = 0;			//DUDA!!!!! SIEMPRE QUE SE EJECUTA LA TASK SE INICIALIZA EN 0?
+	int cortina_manual = 0;
+	int rangohmin = 50;
+	int rangohmax = 60;            //REVISAR RANGO INICIAL DE HUMEDAD
 
 	while(1){
 
+		xQueueSend(Queue1Handle, &rangohmin, 1000); //REVISAR USO DE UNICA QUEUE
+		xQueueSend(Queue1Handle, &rangohmax, 1000);
+		xQueueSend(Queue1Handle, &estado_cortina, 1000);
+		xQueueSend(Queue1Handle, &cortina_manual, 1000);
+
 		APP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual);
-		osDelay(2000);
+
+		osDelay(3000); //CADA CUANTO SE ENVIAN QUEUES TALVEZ BAJAR NUMERO
 	}
 }
 

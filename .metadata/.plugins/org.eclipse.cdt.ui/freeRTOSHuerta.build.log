@@ -1,55 +1,17 @@
-00:54:18 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+19:18:04 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
 make -j4 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-In file included from ../Core/Src/main.c:22:
-../Core/Src/main.c: In function 'main':
-../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:416:10: warning: initialization of 'void (*)(const void *)' from incompatible pointer type 'void (*)(const void *, int,  int)' [-Wincompatible-pointer-types]
-  416 | { #name, (thread), (priority), (instances), (stacksz), NULL, NULL }
-      |          ^
-../Core/Src/main.c:150:3: note: in expansion of macro 'osThreadDef'
-  150 |   osThreadDef(Task3, StartTask3, osPriorityNormal, 0, 128);
-      |   ^~~~~~~~~~~
-../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:416:10: note: (near initialization for 'os_thread_def_Task3.pthread')
-  416 | { #name, (thread), (priority), (instances), (stacksz), NULL, NULL }
-      |          ^
-../Core/Src/main.c:150:3: note: in expansion of macro 'osThreadDef'
-  150 |   osThreadDef(Task3, StartTask3, osPriorityNormal, 0, 128);
-      |   ^~~~~~~~~~~
-../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:416:10: warning: initialization of 'void (*)(const void *)' from incompatible pointer type 'void (*)(const void *, int,  int,  int,  int)' [-Wincompatible-pointer-types]
-  416 | { #name, (thread), (priority), (instances), (stacksz), NULL, NULL }
-      |          ^
-../Core/Src/main.c:153:3: note: in expansion of macro 'osThreadDef'
-  153 |   osThreadDef(Task4, StartTask4, osPriorityHigh, 0, 128);
-      |   ^~~~~~~~~~~
-../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:416:10: note: (near initialization for 'os_thread_def_Task4.pthread')
-  416 | { #name, (thread), (priority), (instances), (stacksz), NULL, NULL }
-      |          ^
-../Core/Src/main.c:153:3: note: in expansion of macro 'osThreadDef'
-  153 |   osThreadDef(Task4, StartTask4, osPriorityHigh, 0, 128);
-      |   ^~~~~~~~~~~
-../Core/Src/main.c:117:7: warning: unused variable 'rangohmax' [-Wunused-variable]
-  117 |   int rangohmax = 60;            //REVISAR RANGO INICIAL DE HUMEDAD
-      |       ^~~~~~~~~
-../Core/Src/main.c:116:7: warning: unused variable 'rangohmin' [-Wunused-variable]
-  116 |   int rangohmin = 50;
-      |       ^~~~~~~~~
-../Core/Src/main.c:115:7: warning: unused variable 'cortina_manual' [-Wunused-variable]
-  115 |   int cortina_manual = 0;        //bandera si se presiona de manera manual la cortina
-      |       ^~~~~~~~~~~~~~
-../Core/Src/main.c:114:7: warning: unused variable 'estado_cortina' [-Wunused-variable]
-  114 |   int estado_cortina = 0;
-      |       ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: freeRTOSHuerta.elf
  
 arm-none-eabi-size   freeRTOSHuerta.elf 
 arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
    text	   data	    bss	    dec	    hex	filename
-  36688	    148	  18972	  55808	   da00	freeRTOSHuerta.elf
+  37600	    148	  18964	  56712	   dd88	freeRTOSHuerta.elf
 Finished building: default.size.stdout
  
 Finished building: freeRTOSHuerta.list
  
 
-00:54:21 Build Finished. 0 errors, 6 warnings. (took 3s.338ms)
+19:18:06 Build Finished. 0 errors, 0 warnings. (took 2s.619ms)
 
