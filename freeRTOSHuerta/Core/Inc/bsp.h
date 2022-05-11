@@ -32,7 +32,7 @@ void BSP_LCD_Humidity(float);
 uint32_t BSP_Get_percentageHS(uint32_t);
 void BSP_Detect_Movement();
 void BSP_CoverFromTemperature(int estado_cortina, int cortina_manual);
-void BSP_Show_SoilHumidity();
+uint32_t BSP_SoilHumidity();
 void BSP_Irrigation(int rangohmin, int rangohmax);
 void BSP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_manual);
 

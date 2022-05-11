@@ -24,6 +24,7 @@
 #include "bsp.h"
 #include "lcd_i2cModule.h"
 #include "DHT.h"
+#include "keypad.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -45,22 +46,24 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-void *DriverMotor_ENA;
-void *DriverMotor_IN1;
-void *DriverMotor_IN2;
+//void *DriverMotor_ENA;
+//void *DriverMotor_IN1;
+//void *DriverMotor_IN2;
 
-void *DriverValve_ENA;
-void *DriverValve_IN1;
-void *DriverValve_IN2;
+//void *DriverValve_ENA;
+//void *DriverValve_IN1;
+//void *DriverValve_IN2;
 
 
-extern DHT_DataTypeDef DHT22;
 
-osThreadId defaultTaskHandle;
-osThreadId Task1Handle;
-osThreadId Task2Handle;
-osThreadId Task3Handle;
+
+osThreadId KeypadTaskHandle;
+osThreadId SensorsTaskHandle;
+osThreadId UserInterfaceTaskHandle;
+osThreadId AutomaticControlTaskHandle;
 osThreadId Task4Handle;
+osThreadId Task5Handle;
+
 
 osMessageQId Queue1Handle;
 /* USER CODE BEGIN PV */
@@ -69,11 +72,12 @@ osMessageQId Queue1Handle;
 
 /* Private function prototypes -----------------------------------------------*/
 
-void StartDefaultTask(void const * argument);
-void StartTask1(void const * argument);
-void StartTask2(void const * argument);
-void StartTask3(void const * argument);
+void KeypadTask(void const * argument);
+void SensorsTask(void const * argument);
+void UserInterfaceTask(void const * argument);
+void AutomaticControlTask(void const * argument);
 void StartTask4(void const * argument);
+void StartTask5(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -136,23 +140,26 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  osThreadDef(KeypadTask, KeypadTask, osPriorityLow, 0, 128);
+  KeypadTaskHandle = osThreadCreate(osThread(KeypadTask), NULL);
 
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  osThreadDef(Task1, StartTask1, osPriorityBelowNormal, 0, 128);
-  Task1Handle = osThreadCreate(osThread(Task1), NULL);
+  osThreadDef(SensorsTask, SensorsTask, osPriorityBelowNormal, 0, 128);
+  SensorsTaskHandle = osThreadCreate(osThread(SensorsTask), NULL);
 
-  osThreadDef(Task2, StartTask2, osPriorityAboveNormal, 0, 128);
-  Task2Handle = osThreadCreate(osThread(Task2), NULL);
+  osThreadDef(UserInterfaceTask, UserInterfaceTask, osPriorityNormal, 0, 128);
+  UserInterfaceTaskHandle = osThreadCreate(osThread(UserInterfaceTask), NULL);
 
-  osThreadDef(Task3, StartTask3, osPriorityNormal, 0, 128);
-  Task3Handle = osThreadCreate(osThread(Task3), NULL);
+  osThreadDef(AutomaticControlTask, AutomaticControlTask, osPriorityHigh, 0, 128);
+  AutomaticControlTaskHandle = osThreadCreate(osThread(AutomaticControlTask), NULL);
 
   osThreadDef(Task4, StartTask4, osPriorityHigh, 0, 128);
    Task4Handle = osThreadCreate(osThread(Task4), NULL);
+
+   osThreadDef(Task5, StartTask5, osPriorityLow, 0, 128);
+    Task5Handle = osThreadCreate(osThread(Task5), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
@@ -210,68 +217,89 @@ int main(void)
   * @retval None
   */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+void KeypadTask(void const * argument)
 {
   /* USER CODE BEGIN 5 */
-	//DHT_GetData(&DHT22);
+	 int key;
   /* Infinite loop */
   for(;;)
   {
+	key = keypad_read();
+    osDelay(10);
 
-   // osDelay(2000);
+
+
+
   }
   /* USER CODE END 5 */
 }
 
-void StartTask1(void const * argument){
+void SensorsTask(void const * argument){
+
+	DHT_DataTypeDef DHT22;
+	uint32_t soilHumidity;
 
 	while(1){
-		LCD_Clear();
-	    BSP_LCD_Temperature(DHT22.Temperature);
-	    BSP_LCD_Humidity(DHT22.Humidity);
-	    BSP_Show_SoilHumidity();
-		osDelay(2000);
+
+		DHT_GetData(&DHT22);
+		soilHumidity = APP_SoilHumidity();
+		osDelay(60000);                //Bajar para testear
+
+
 	}
 }
 
-void StartTask2(void const * argument){
+void UserInterfaceTask(void const * argument){
 
 	while(1){
-		APP_Show_Movement();
-		osDelay(1000);
+
+		osDelay(500);
 	}
 }
 
-void StartTask3(void const * argument){
+void AutomaticControlTask(void const * argument){
 
-	int rangohmin;				//Hace falta poner static???????????????????????
-	int rangohmax;
+//	int rangohmin;				//Hace falta poner static???????????????????????
+//	int rangohmax;
 
 	while(1){
-		xQueueReceive(Queue1Handle, &rangohmin, 1000);
-		xQueueReceive(Queue1Handle, &rangohmax, 1000);
-		//APP_Irrigation(rangohmin, rangohmax);   //Funciona valor recibido por la queue???????????????
-		osDelay(2000);
+//		xQueueReceive(Queue1Handle, &rangohmin, 1000);
+//		xQueueReceive(Queue1Handle, &rangohmax, 1000);
+//		//APP_Irrigation(rangohmin, rangohmax);   //Funciona valor recibido por la queue???????????????
+//		osDelay(500);
 	}
 }
 
 void StartTask4(void const * argument){
 
-	int estado_cortina = 0;			//DUDA!!!!! SIEMPRE QUE SE EJECUTA LA TASK SE INICIALIZA EN 0?
-	int cortina_manual = 0;
-	int rangohmin = 50;
-	int rangohmax = 60;            //REVISAR RANGO INICIAL DE HUMEDAD
+//	int estado_cortina = 0;			//DUDA!!!!! SIEMPRE QUE SE EJECUTA LA TASK SE INICIALIZA EN 0?
+//	int cortina_manual = 0;
+//	int rangohmin = 50;
+//	int rangohmax = 60;            //REVISAR RANGO INICIAL DE HUMEDAD
 
 	while(1){
 
-		xQueueSend(Queue1Handle, &rangohmin, 1000); //REVISAR USO DE UNICA QUEUE
-		xQueueSend(Queue1Handle, &rangohmax, 1000);
-		xQueueSend(Queue1Handle, &estado_cortina, 1000);
-		xQueueSend(Queue1Handle, &cortina_manual, 1000);
+//		APP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual); //falta poner timeout con los fines de carrera
+//
+//		xQueueSend(Queue1Handle, &rangohmin, 1000); //REVISAR USO DE UNICA QUEUE
+//		xQueueSend(Queue1Handle, &rangohmax, 1000);
+//		xQueueSend(Queue1Handle, &estado_cortina, 1000);
+//		xQueueSend(Queue1Handle, &cortina_manual, 1000);
+//
+//		osDelay(500); //CADA CUANTO SE ENVIAN QUEUES TALVEZ BAJAR NUMERO
+	}
+}
 
-		APP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual);
+void StartTask5(void const * argument){
 
-		osDelay(3000); //CADA CUANTO SE ENVIAN QUEUES TALVEZ BAJAR NUMERO
+//	int estado_cortina;				//Hace falta poner static???????????????????????
+//	int cortina_manual;
+
+	while(1){
+//		xQueueReceive(Queue1Handle, &estado_cortina, 1000);
+//		xQueueReceive(Queue1Handle, &cortina_manual, 1000);
+//		//APP_CoverFromTemperature(estado_cortina, cortina_manual);   //Funciona valor recibido por la queue???????????????
+//		osDelay(500);
 	}
 }
 
@@ -302,12 +330,7 @@ void APP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_ma
     BSP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual);
 }
 
-void APP_Show_DHT22(){
-    LCD_Clear();  //REVISAR necesidad de esta funcion
-    DHT_GetData(&DHT22);
-    BSP_LCD_Temperature(DHT22.Temperature);
-    BSP_LCD_Humidity(DHT22.Humidity);
-}
+
 
 void APP_Show_Movement(){
     BSP_Detect_Movement();
@@ -317,8 +340,10 @@ void APP_CoverFromTemperature(int estado_cortina, int cortina_manual){
     BSP_CoverFromTemperature(estado_cortina, cortina_manual);
 }
 
-void APP_Show_SoilHumidity(){
-    BSP_Show_SoilHumidity();
+uint32_t APP_SoilHumidity(){
+	int SoilHumidity;
+	SoilHumidity = BSP_SoilHumidity();
+	return SoilHumidity;
 }
 
 void APP_Irrigation(int rangohmin, int rangohmax){

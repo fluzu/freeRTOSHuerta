@@ -15,7 +15,9 @@ I2C_HandleTypeDef hi2c1;
 RTC_HandleTypeDef hrtc;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
-DHT_DataTypeDef DHT22;
+
+static DHT_DataTypeDef DHT22; //Revisar si trae problemas static
+
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -173,18 +175,14 @@ void BSP_CoverFromTemperature(int estado_cortina, int cortina_manual){
     }
 }
 
-void BSP_Show_SoilHumidity(){
+uint32_t BSP_SoilHumidity(){
     HAL_ADC_Start(&hadc1);
     if(HAL_ADC_PollForConversion(&hadc1, 5) == HAL_OK){     //incilur esta parte en el solenoide para hecr while?
         value_adc[0] = HAL_ADC_GetValue(&hadc1);
         value_adc[0] = BSP_Get_percentageHS(value_adc[0]);
         HAL_ADC_Stop(&hadc1);
     }
-    LCD_SetCursor(2, 10);
-    LCD_Print("HS:%0.0f%%", value_adc[0]);  //REVISAR
-
-    //HAL_Delay(3000);
-    //LCD_Clear();
+    return value_adc[0];
 }
 
 void BSP_Irrigation(int rangohmin, int rangohmax){

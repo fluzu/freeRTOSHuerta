@@ -1,17 +1,25 @@
-19:18:04 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+11:48:29 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
 make -j4 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:223:7: warning: variable 'key' set but not used [-Wunused-but-set-variable]
+  223 |   int key;
+      |       ^~~
+../Core/Src/main.c: In function 'SensorsTask':
+../Core/Src/main.c:240:11: warning: variable 'soilHumidity' set but not used [-Wunused-but-set-variable]
+  240 |  uint32_t soilHumidity;
+      |           ^~~~~~~~~~~~
 arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: freeRTOSHuerta.elf
  
 arm-none-eabi-size   freeRTOSHuerta.elf 
 arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
    text	   data	    bss	    dec	    hex	filename
-  37600	    148	  18964	  56712	   dd88	freeRTOSHuerta.elf
+  35692	    148	  18972	  54812	   d61c	freeRTOSHuerta.elf
 Finished building: default.size.stdout
  
 Finished building: freeRTOSHuerta.list
  
 
-19:18:06 Build Finished. 0 errors, 0 warnings. (took 2s.619ms)
+11:48:32 Build Finished. 0 errors, 2 warnings. (took 3s.386ms)
 
