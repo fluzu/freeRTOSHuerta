@@ -1,7 +1,7 @@
 /**
 *@file: lcd_i2cModule.c
 *@brief: Character lcd i2c stm32 hal driver
-*@author: Veysel Gökdemir, © 2018
+*@author: Veysel Gï¿½kdemir, ï¿½ 2018
 *@note: This library is compatible with the LCD Displays that have similarities(pinouts, conf., ddram address...) with HD44780, KS0066U, etc.
 * The library has been tested on the lcd 16x2.
 */
@@ -219,7 +219,7 @@ void LCD_Send_String(char str[], uint8_t mode)
 *@param: *ch: "string + %f", value: float data variable
 *@retval: none
 */
-void LCD_Print(char const *ch, float value)
+void LCD_Print(char const *ch, uint32_t value)       //antes estaba en float lo cambie
 {
 	char data_ch[100]; //default data size:100.
 	

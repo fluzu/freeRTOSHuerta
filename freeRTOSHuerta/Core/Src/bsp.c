@@ -6,6 +6,7 @@
 #include "keypad.h"
 #include "bsp.h"
 #include "main.h"
+#include <stdio.h>
 
 uint32_t value_adc[3];
 
@@ -91,19 +92,19 @@ void BSP_Delay(uint16_t Delay){
     delay_ms(Delay);
 }
 
-void BSP_LCD_Temperature(float temperatura) {
+void BSP_LCD_Temperature(uint32_t temperatura) {
     LCD_SetCursor(1, 4);
-    LCD_Print("Grados:%0.0fC", temperatura);
+    LCD_Print("Grados:%1uC", temperatura);
 }
 
-void BSP_LCD_Humidity(float humedad) {
+void BSP_LCD_Humidity(uint32_t humedad) {
     LCD_SetCursor(2, 1);
-    LCD_Print("HA:%0.0f%%", humedad);
+    LCD_Print("HA:%1u%%", humedad);
 }
 
 void BSP_LCD_SoilHumidity(uint32_t soilHumidity){
 	LCD_SetCursor(2, 10);
-	LCD_Print("HS:%0.0f%%", soilHumidity);
+	LCD_Print("HS:%1u%%", soilHumidity);
 }
 
 

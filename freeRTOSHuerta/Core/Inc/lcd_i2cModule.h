@@ -1,7 +1,7 @@
 /**
 *@file: lcd_i2cModule.h
 *@brief: Character lcd i2c stm32 hal driver
-*@author: Veysel Gökdemir, © 2018
+*@author: Veysel Gï¿½kdemir, ï¿½ 2018
 */
 
 #ifndef LCD_I2CMODULE_H
@@ -171,7 +171,7 @@ void LCD_Send_String(char str[], uint8_t mode);
 *@param: value: uint8_t
 *@retval: none
 */
-void LCD_Print(char const *ch, float value);
+void LCD_Print(char const *ch, uint32_t value);  //cambie antes estaba en float
 
 ///**
 //*@brief: Set lcd parameters.

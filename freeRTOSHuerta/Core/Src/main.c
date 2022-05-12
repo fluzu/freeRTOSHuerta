@@ -6,7 +6,7 @@
 #include "lcd_i2cModule.h"
 #include "DHT.h"
 #include "keypad.h"
-
+#include <stdio.h>
 
 //void *DriverMotor_ENA;
 //void *DriverMotor_IN1;
@@ -127,8 +127,8 @@ void KeypadTask(void const * argument)
 void SensorsTask(void const * argument){
 
 	DHT_DataTypeDef DHT22;
-	float tx_temperature;
-	float tx_humidity;
+	uint32_t tx_temperature;
+	uint32_t tx_humidity;
 	uint32_t soilHumidity;
 
 	while(1){
@@ -141,8 +141,8 @@ void SensorsTask(void const * argument){
 
 		osDelay(2000);                //Bajar para testear
 
-		xQueueSend(Queue1Handle, &tx_humidity, 2000);
-		xQueueSend(Queue1Handle, &tx_temperature, 1000);
+		xQueueSend(Queue1Handle, &tx_temperature, 2000);
+		xQueueSend(Queue1Handle, &tx_humidity, 1000);
 
 		xQueueSend(Queue2Handle, &soilHumidity, 2000);
 	}
@@ -153,20 +153,24 @@ void UserInterfaceTask(void const * argument){
 
 	uint32_t soilHumidity;
 	int rx_key;
-	float rx_temperature;
-	float rx_humidity;
+	uint32_t rx_temperature;
+	uint32_t rx_humidity;
 
 	while(1){
 
-		xQueueReceive(Queue3Handle, &rx_key, 2000);
+		if(xQueueReceive(Queue3Handle, &rx_key, 2000) == pdTRUE){
+
+		}
 
 		if(xQueueReceive(Queue1Handle, &rx_humidity, 2000) == pdTRUE){
 			if(xQueueReceive(Queue1Handle, &rx_temperature, 2000 == pdTRUE)){
 				if(xQueueReceive(Queue2Handle, &soilHumidity, 2000 == pdTRUE)){
 
-					BSP_LCD_Temperature(rx_temperature);
 					BSP_LCD_Humidity(rx_humidity);
+					BSP_LCD_Temperature(rx_temperature);
 					BSP_LCD_SoilHumidity(soilHumidity);
+
+
 
 				}
 			}
