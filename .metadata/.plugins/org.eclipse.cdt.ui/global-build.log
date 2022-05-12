@@ -1,21 +1,292 @@
-11:48:29 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+17:30:31 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
 make -j4 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'KeypadTask':
-../Core/Src/main.c:223:7: warning: variable 'key' set but not used [-Wunused-but-set-variable]
-  223 |   int key;
-      |       ^~~
-../Core/Src/main.c: In function 'SensorsTask':
-../Core/Src/main.c:240:11: warning: variable 'soilHumidity' set but not used [-Wunused-but-set-variable]
-  240 |  uint32_t soilHumidity;
-      |           ^~~~~~~~~~~~
 arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: freeRTOSHuerta.elf
  
 arm-none-eabi-size   freeRTOSHuerta.elf 
 arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
    text	   data	    bss	    dec	    hex	filename
-  35692	    148	  18972	  54812	   d61c	freeRTOSHuerta.elf
+  38076	    148	  18980	  57204	   df74	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+17:33:19 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  38076	    148	  18980	  57204	   df74	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+17:34:21 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  38076	    148	  18980	  57204	   df74	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+17:37:12 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  38076	    148	  18980	  57204	   df74	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+18:13:58 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37908	    148	  18972	  57028	   dec4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+18:14:37 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37908	    148	  18972	  57028	   dec4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+18:18:18 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37908	    148	  18972	  57028	   dec4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+19:13:50 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37892	    148	  18972	  57012	   deb4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+19:14:16 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37892	    148	  18972	  57012	   deb4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+19:16:22 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37892	    148	  18972	  57012	   deb4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+19:20:33 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37892	    148	  18972	  57012	   deb4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+19:22:04 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37892	    148	  18972	  57012	   deb4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+19:25:21 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37892	    148	  18972	  57012	   deb4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+10:45:34 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37892	    148	  18972	  57012	   deb4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+11:07:45 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+../Core/Src/main.c: In function 'UserInterfaceTask':
+../Core/Src/main.c:153:8: warning: variable 'rx_humidity' set but not used [-Wunused-but-set-variable]
+  153 |  float rx_humidity;
+      |        ^~~~~~~~~~~
+../Core/Src/main.c:152:8: warning: variable 'rx_temperature' set but not used [-Wunused-but-set-variable]
+  152 |  float rx_temperature;
+      |        ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37876	    148	  18972	  56996	   dea4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+11:10:20 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37876	    148	  18972	  56996	   dea4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+11:33:28 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+../Core/Src/main.c: In function 'UserInterfaceTask':
+../Core/Src/main.c:153:8: warning: variable 'rx_humidity' set but not used [-Wunused-but-set-variable]
+  153 |  float rx_humidity;
+      |        ^~~~~~~~~~~
+../Core/Src/main.c:152:8: warning: variable 'rx_temperature' set but not used [-Wunused-but-set-variable]
+  152 |  float rx_temperature;
+      |        ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  36948	    148	  18956	  56052	   daf4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+11:34:37 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:59,
+                 from ../Core/Src/main.c:3:
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:49:47: error: expected '{' before ')' token
+   49 |   Queue1Handle = xQueueCreate(4, sizeof(struct));
+      |                                               ^
+../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:146:94: note: in definition of macro 'xQueueCreate'
+  146 |  #define xQueueCreate( uxQueueLength, uxItemSize ) xQueueGenericCreate( ( uxQueueLength ), ( uxItemSize ), ( queueQUEUE_TYPE_BASE ) )
+      |                                                                                              ^~~~~~~~~~
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+../Core/Src/main.c: In function 'UserInterfaceTask':
+../Core/Src/main.c:153:8: warning: variable 'rx_humidity' set but not used [-Wunused-but-set-variable]
+  153 |  float rx_humidity;
+      |        ^~~~~~~~~~~
+../Core/Src/main.c:152:8: warning: variable 'rx_temperature' set but not used [-Wunused-but-set-variable]
+  152 |  float rx_temperature;
+      |        ^~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:55: Core/Src/main.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+11:40:25 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+../Core/Src/main.c: In function 'UserInterfaceTask':
+../Core/Src/main.c:154:18: warning: unused variable 'DHT22' [-Wunused-variable]
+  154 |  DHT_DataTypeDef DHT22;
+      |                  ^~~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  36996	    148	  18956	  56100	   db24	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+11:48:58 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'KeypadTask':
+../Core/Src/main.c:110:7: warning: unused variable 'init' [-Wunused-variable]
+  110 |   int init = 0;
+      |       ^~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  36996	    148	  18956	  56100	   db24	freeRTOSHuerta.elf
 Finished building: default.size.stdout
  
 Finished building: freeRTOSHuerta.list

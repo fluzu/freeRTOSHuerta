@@ -1,23 +1,4 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+
 #include "main.h"
 #include "cmsis_os.h"
 #include "queue.h"
@@ -26,26 +7,7 @@
 #include "DHT.h"
 #include "keypad.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
 //void *DriverMotor_ENA;
 //void *DriverMotor_IN1;
 //void *DriverMotor_IN2;
@@ -61,91 +23,37 @@ osThreadId KeypadTaskHandle;
 osThreadId SensorsTaskHandle;
 osThreadId UserInterfaceTaskHandle;
 osThreadId AutomaticControlTaskHandle;
-osThreadId Task4Handle;
-osThreadId Task5Handle;
+
 
 
 osMessageQId Queue1Handle;
-/* USER CODE BEGIN PV */
+osMessageQId Queue2Handle;
+osMessageQId Queue3Handle;
 
-/* USER CODE END PV */
 
-/* Private function prototypes -----------------------------------------------*/
 
 void KeypadTask(void const * argument);
 void SensorsTask(void const * argument);
 void UserInterfaceTask(void const * argument);
 void AutomaticControlTask(void const * argument);
-void StartTask4(void const * argument);
-void StartTask5(void const * argument);
 
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
 
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
     BSP_Init();
     APP_Show_SystemIntro();
 
-  /* USER CODE BEGIN Init */
 
-  /* USER CODE END Init */
+  Queue1Handle = xQueueCreate(4, sizeof(float));
+  Queue2Handle = xQueueCreate(4, sizeof(uint32_t));
+  Queue3Handle = xQueueCreate(4, sizeof(int));
 
-  /* Configure the system clock */
-
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-
-  /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
-
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
-
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
-
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  Queue1Handle = xQueueCreate(4, sizeof(int));
-  /* USER CODE END RTOS_QUEUES */
-
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
   osThreadDef(KeypadTask, KeypadTask, osPriorityLow, 0, 128);
   KeypadTaskHandle = osThreadCreate(osThread(KeypadTask), NULL);
 
 
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
   osThreadDef(SensorsTask, SensorsTask, osPriorityBelowNormal, 0, 128);
   SensorsTaskHandle = osThreadCreate(osThread(SensorsTask), NULL);
 
@@ -155,38 +63,16 @@ int main(void)
   osThreadDef(AutomaticControlTask, AutomaticControlTask, osPriorityHigh, 0, 128);
   AutomaticControlTaskHandle = osThreadCreate(osThread(AutomaticControlTask), NULL);
 
-  osThreadDef(Task4, StartTask4, osPriorityHigh, 0, 128);
-   Task4Handle = osThreadCreate(osThread(Task4), NULL);
 
-   osThreadDef(Task5, StartTask5, osPriorityLow, 0, 128);
-    Task5Handle = osThreadCreate(osThread(Task5), NULL);
-  /* USER CODE END RTOS_THREADS */
 
-  /* Start scheduler */
   osKernelStart();
 
-  /* We should never get here as control is now taken by the scheduler */
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+
   while (1)
   {
-    /* USER CODE END WHILE */
-      //htim2.Instance->CCR1 = 50; //ANGULO 45 GRADOS REVISAR SI NO ROME SERVO ESTANDO EN BUCLE
-///Teclado
- //     APP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual);
-///DHT22
- //     APP_Show_DHT22();
-///Sensor humedad de suelo
-  //    APP_Show_SoilHumidity();
-      ///Sensor movimiento
-  //    APP_Show_Movement();
-///Cerrar o abrir cortina por temperatura
-  //    APP_CoverFromTemperature(estado_cortina, cortina_manual);
-///Valvula solenoide riego
- //     APP_Irrigation(rangohmin, rangohmax);
-    /* USER CODE BEGIN 3 */
+
   }
-  /* USER CODE END 3 */
+
 }
 
 /**
@@ -219,41 +105,69 @@ int main(void)
 /* USER CODE END Header_StartDefaultTask */
 void KeypadTask(void const * argument)
 {
-  /* USER CODE BEGIN 5 */
+
 	 int key;
-  /* Infinite loop */
+	 int init = 0;
+
   for(;;)
   {
-	key = keypad_read();
+	  key = keypad_read();
+
+	if(key != 0){
+
+		xQueueSend(Queue3Handle, &key, 1000);
+	}
+
     osDelay(10);
 
 
-
-
   }
-  /* USER CODE END 5 */
+
 }
 
 void SensorsTask(void const * argument){
 
 	DHT_DataTypeDef DHT22;
+	float tx_temperature;
+	float tx_humidity;
 	uint32_t soilHumidity;
 
 	while(1){
 
 		DHT_GetData(&DHT22);
-		soilHumidity = APP_SoilHumidity();
-		osDelay(60000);                //Bajar para testear
+		tx_humidity = DHT22.Humidity;
+		tx_temperature = DHT22.Temperature;
 
+		//soilHumidity = APP_SoilHumidity();
+		soilHumidity++;
+		osDelay(1000);                //Bajar para testear
 
+		xQueueSend(Queue1Handle, &tx_humidity, 2000);
+		xQueueSend(Queue1Handle, &tx_temperature, 1000);
+
+		xQueueSend(Queue2Handle, &soilHumidity, 2000);
 	}
 }
 
 void UserInterfaceTask(void const * argument){
 
+
+	uint32_t soilHumidity;
+	int key;
+	float rx_temperature;
+	float rx_humidity;
+
 	while(1){
 
-		osDelay(500);
+		xQueueReceive(Queue3Handle, &key, 2000);
+
+		xQueueReceive(Queue1Handle, &rx_humidity, 2000);
+		xQueueReceive(Queue1Handle, &rx_temperature, 2000);
+
+
+		xQueueReceive(Queue2Handle, &soilHumidity, 2000);
+
+		osDelay(1000);
 	}
 }
 
@@ -266,42 +180,11 @@ void AutomaticControlTask(void const * argument){
 //		xQueueReceive(Queue1Handle, &rangohmin, 1000);
 //		xQueueReceive(Queue1Handle, &rangohmax, 1000);
 //		//APP_Irrigation(rangohmin, rangohmax);   //Funciona valor recibido por la queue???????????????
-//		osDelay(500);
+		osDelay(500);
 	}
 }
 
-void StartTask4(void const * argument){
 
-//	int estado_cortina = 0;			//DUDA!!!!! SIEMPRE QUE SE EJECUTA LA TASK SE INICIALIZA EN 0?
-//	int cortina_manual = 0;
-//	int rangohmin = 50;
-//	int rangohmax = 60;            //REVISAR RANGO INICIAL DE HUMEDAD
-
-	while(1){
-
-//		APP_Keypad(rangohmin, rangohmax, estado_cortina, cortina_manual); //falta poner timeout con los fines de carrera
-//
-//		xQueueSend(Queue1Handle, &rangohmin, 1000); //REVISAR USO DE UNICA QUEUE
-//		xQueueSend(Queue1Handle, &rangohmax, 1000);
-//		xQueueSend(Queue1Handle, &estado_cortina, 1000);
-//		xQueueSend(Queue1Handle, &cortina_manual, 1000);
-//
-//		osDelay(500); //CADA CUANTO SE ENVIAN QUEUES TALVEZ BAJAR NUMERO
-	}
-}
-
-void StartTask5(void const * argument){
-
-//	int estado_cortina;				//Hace falta poner static???????????????????????
-//	int cortina_manual;
-
-	while(1){
-//		xQueueReceive(Queue1Handle, &estado_cortina, 1000);
-//		xQueueReceive(Queue1Handle, &cortina_manual, 1000);
-//		//APP_CoverFromTemperature(estado_cortina, cortina_manual);   //Funciona valor recibido por la queue???????????????
-//		osDelay(500);
-	}
-}
 
 
 void APP_Timer10ms(){ //Borrar
