@@ -29,6 +29,7 @@ void BSP_Init(void);
 void BSP_Delay(uint16_t);
 void BSP_LCD_Temperature(float);
 void BSP_LCD_Humidity(float);
+void BSP_LCD_SoilHumidity(uint32_t);
 uint32_t BSP_Get_percentageHS(uint32_t);
 void BSP_Detect_Movement();
 void BSP_CoverFromTemperature(int estado_cortina, int cortina_manual);

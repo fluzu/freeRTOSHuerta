@@ -101,6 +101,12 @@ void BSP_LCD_Humidity(float humedad) {
     LCD_Print("HA:%0.0f%%", humedad);
 }
 
+void BSP_LCD_SoilHumidity(uint32_t soilHumidity){
+	LCD_SetCursor(2, 10);
+	LCD_Print("HS:%0.0f%%", soilHumidity);
+}
+
+
 uint32_t BSP_Get_percentageHS(uint32_t value){
     int hummin = 4095;                      //REVISAR TIPO DE DATO
     int hummax = 2300;                      //REVISAR Maximo y Minimo en especial maximo

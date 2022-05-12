@@ -107,7 +107,6 @@ void KeypadTask(void const * argument)
 {
 
 	 int key;
-	 int init = 0;
 
   for(;;)
   {
@@ -138,9 +137,9 @@ void SensorsTask(void const * argument){
 		tx_humidity = DHT22.Humidity;
 		tx_temperature = DHT22.Temperature;
 
-		//soilHumidity = APP_SoilHumidity();
-		soilHumidity++;
-		osDelay(1000);                //Bajar para testear
+		soilHumidity = APP_SoilHumidity();
+
+		osDelay(2000);                //Bajar para testear
 
 		xQueueSend(Queue1Handle, &tx_humidity, 2000);
 		xQueueSend(Queue1Handle, &tx_temperature, 1000);
@@ -153,19 +152,27 @@ void UserInterfaceTask(void const * argument){
 
 
 	uint32_t soilHumidity;
-	int key;
+	int rx_key;
 	float rx_temperature;
 	float rx_humidity;
 
 	while(1){
 
-		xQueueReceive(Queue3Handle, &key, 2000);
+		xQueueReceive(Queue3Handle, &rx_key, 2000);
 
-		xQueueReceive(Queue1Handle, &rx_humidity, 2000);
-		xQueueReceive(Queue1Handle, &rx_temperature, 2000);
+		if(xQueueReceive(Queue1Handle, &rx_humidity, 2000) == pdTRUE){
+			if(xQueueReceive(Queue1Handle, &rx_temperature, 2000 == pdTRUE)){
+				if(xQueueReceive(Queue2Handle, &soilHumidity, 2000 == pdTRUE)){
+
+					BSP_LCD_Temperature(rx_temperature);
+					BSP_LCD_Humidity(rx_humidity);
+					BSP_LCD_SoilHumidity(soilHumidity);
+
+				}
+			}
+		}
 
 
-		xQueueReceive(Queue2Handle, &soilHumidity, 2000);
 
 		osDelay(1000);
 	}
