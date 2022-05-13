@@ -217,11 +217,23 @@ void BSP_Irrigation(int rangohmin, int rangohmax){
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_RESET); //  ENA
 }
 
-void BSP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_manual){
-    int tecla;
-    tecla = keypad_read();
-    LCD_Clear();
-    if (tecla != 0){
+void BSP_TurnOn_Valve(){
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_SET);   //  ENA
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_SET);   //  IN1
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, GPIO_PIN_RESET); //  IN2
+}
+
+void BSP_TurnOff_Valve(){
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_RESET); //  ENA
+}
+
+
+
+
+
+
+
+void BSP_Keypad(int tecla, uint32_t rangohmin, uint32_t rangohmax, int estado_cortina, int cortina_manual){
         switch (tecla) {
             case 65:
                 LCD_Clear();
@@ -245,7 +257,7 @@ void BSP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_ma
                     }
                 } while (tecla == 0 || rangohmin == 100);             //VER MAS CASOS // oscioso dos veces 100 porciento
                 LCD_SetCursor(1, 5);
-                LCD_Print("MINIMO:%0.0f", rangohmin);
+                LCD_Print("MINIMO:%1u", rangohmin);
                 LCD_SetCursor(2, 5);
                 LCD_Print("MAXIMO:", 1);
                 do {
@@ -265,8 +277,9 @@ void BSP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_ma
                     }                                           //FALTA CASO ERROR QUE SEA MENOR AL MÍNIMO
                 } while (tecla == 0 || rangohmax <= rangohmin);   //REVISAR NO HACE EFECTO
                 LCD_SetCursor(2, 5);
-                LCD_Print("MAXIMO:%0.0f", rangohmax);
+                LCD_Print("MAXIMO:%1u", rangohmax);
                 HAL_Delay(4000);
+                LCD_Clear();
                 break;
             case 49:
                 LCD_SetCursor(2, 1);
@@ -399,7 +412,7 @@ void BSP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_ma
                 HAL_Delay(2000);
                 break;
         }
-    }
+
 }
 
 /**

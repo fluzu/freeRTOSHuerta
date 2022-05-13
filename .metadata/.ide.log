@@ -1767,3 +1767,14 @@
 2022-05-06 10:27:55,393 [WARN] IP:2108 - I2C_Coeff_DF not found: check if there is a RefParameter without a condition.
 2022-05-06 10:27:55,393 [WARN] IP:2108 - Analog_Filter not found: check if there is a RefParameter without a condition.
 2022-05-06 10:31:22,442 [ERROR] RtosPanel:553 - Can not restore the selected Tab for FREERTOS(A reason can be that the tab is no more available.)
+2022-05-12 20:05:32,641 [INFO] Activator:177 - 
+
+
+2022-05-12 20:05:32,667 [INFO] Activator:178 - !SESSION log4j initialized
+2022-05-12 20:05:56,938 [ERROR] AnalyticsContext:980 - The ST intranet updater server is unknown: mcucrossselector.codex.cro.st.com
+2022-05-12 20:06:08,216 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] may. 12, 2022 8:06:08 P. M. org.glassfish.grizzly.http.server.NetworkListener start
+2022-05-12 20:06:08,219 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] INFORMACI?N: Started listener bound to [localhost:1596]
+2022-05-12 20:06:08,220 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 
+2022-05-12 20:06:08,223 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] may. 12, 2022 8:06:08 P. M. org.glassfish.grizzly.http.server.HttpServer start
+2022-05-12 20:06:08,225 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] INFORMACI?N: [HttpServer] Started.
+2022-05-12 20:06:08,225 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 

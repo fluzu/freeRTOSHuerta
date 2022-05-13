@@ -1,17 +1,27 @@
-17:45:11 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+01:37:50 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
 make -j4 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'AutomaticControlTask':
+../Core/Src/main.c:382:11: warning: unused variable 'soilHumidity' [-Wunused-variable]
+  382 |  uint32_t soilHumidity;
+      |           ^~~~~~~~~~~~
+../Core/Src/main.c:381:11: warning: unused variable 'rx_rangohmax' [-Wunused-variable]
+  381 |  uint32_t rx_rangohmax;
+      |           ^~~~~~~~~~~~
+../Core/Src/main.c:380:11: warning: unused variable 'rx_rangohmin' [-Wunused-variable]
+  380 |  uint32_t rx_rangohmin;    //Hace falta poner static???????????????????????
+      |           ^~~~~~~~~~~~
 arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: freeRTOSHuerta.elf
  
 arm-none-eabi-size   freeRTOSHuerta.elf 
 arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
    text	   data	    bss	    dec	    hex	filename
-  38344	    148	  18972	  57464	   e078	freeRTOSHuerta.elf
+  39668	    148	  18972	  58788	   e5a4	freeRTOSHuerta.elf
 Finished building: default.size.stdout
  
 Finished building: freeRTOSHuerta.list
  
 
-17:45:14 Build Finished. 0 errors, 0 warnings. (took 3s.139ms)
+01:37:53 Build Finished. 0 errors, 3 warnings. (took 3s.282ms)
 

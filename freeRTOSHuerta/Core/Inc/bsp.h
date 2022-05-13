@@ -35,7 +35,9 @@ void BSP_Detect_Movement();
 void BSP_CoverFromTemperature(int estado_cortina, int cortina_manual);
 uint32_t BSP_SoilHumidity();
 void BSP_Irrigation(int rangohmin, int rangohmax);
-void BSP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_manual);
+void BSP_TurnOn_Valve();
+void BSP_TurnOff_Valve();
+void BSP_Keypad(int tecla, uint32_t rangohmin, uint32_t rangohmax, int estado_cortina, int cortina_manual);
 
 void Error_Handler(void);
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
