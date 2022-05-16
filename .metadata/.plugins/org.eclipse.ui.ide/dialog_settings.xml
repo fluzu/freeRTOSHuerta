@@ -9,6 +9,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\Facu\STM32CubeIDE\versionanterior\freeRTOS1Huerta"/>
 			<item value="C:\Users\Facu\Documents\Materias Ingenieria\Proyecto\FREERTOS test\TrabajoFinalHuerta"/>
 			<item value="C:\Users\Facu\Documents\Trabajo Final Huerta\Huertera"/>
 			<item value="C:\Users\Facu\Documents\TRABAJO FINAL\TrabajoFinalHuerta\TrabajoFinalHuerta"/>

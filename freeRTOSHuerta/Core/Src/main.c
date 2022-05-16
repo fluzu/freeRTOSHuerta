@@ -31,10 +31,10 @@ osThreadId AutomaticControlTaskHandle;
 
 
 osMessageQId Queue1Handle;
-osMessageQId Queue2Handle;
 osMessageQId Queue3Handle;
 osMessageQId Queue4Handle;
 
+QueueSetHandle_t QueueSetHandle;
 
 
 void KeypadTask(void const * argument);
@@ -51,10 +51,14 @@ int main(void)
     APP_Show_SystemIntro();
 
 
-  Queue1Handle = xQueueCreate(4, sizeof(float));
-  Queue2Handle = xQueueCreate(4, sizeof(uint32_t));  //se puede ahorrar una queue??
-  Queue3Handle = xQueueCreate(4, sizeof(int));
-  Queue4Handle = xQueueCreate(4, sizeof(uint32_t));
+  Queue1Handle = xQueueCreate(100, sizeof(LCD_DataTypeDef));
+  Queue3Handle = xQueueCreate(100, sizeof(int));
+  Queue4Handle = xQueueCreate(100, sizeof(Output_DataTypeDef));
+
+  QueueSetHandle = xQueueCreateSet(210); // revisar si no es mucho
+
+  xQueueAddToSet(Queue1Handle, QueueSetHandle);
+  xQueueAddToSet(Queue3Handle, QueueSetHandle);
 
   osThreadDef(KeypadTask, KeypadTask, osPriorityLow, 0, 128);
   KeypadTaskHandle = osThreadCreate(osThread(KeypadTask), NULL);
@@ -120,7 +124,7 @@ void KeypadTask(void const * argument)
 
 	if(key != 0){
 
-		xQueueSend(Queue3Handle, &key, portMAX_DELAY);  // sacar pormax_delay que es puro bloqueante
+		xQueueSend(Queue3Handle, &key, 5000);  // sacar pormax_delay que es puro bloqueante
 	}
 
     osDelay(10);
@@ -133,280 +137,495 @@ void KeypadTask(void const * argument)
 void SensorsTask(void const * argument){
 
 	DHT_DataTypeDef DHT22;
-	uint32_t tx_temperature;
-	uint32_t tx_humidity;
-	uint32_t soilHumidity;
+	LCD_DataTypeDef LCD_Data;
+
 
 	while(1){
 
 		DHT_GetData(&DHT22);
-		tx_humidity = DHT22.Humidity;
-		tx_temperature = DHT22.Temperature;
+		LCD_Data.humidity = DHT22.Humidity;
+		LCD_Data.temperature = DHT22.Temperature;
+		LCD_Data.soilHumidity = APP_SoilHumidity();
 
-		soilHumidity = APP_SoilHumidity();
+		//QueueReset(Queue1Handle);
 
-		osDelay(2000);                //Bajar para testear
 
-		xQueueSend(Queue1Handle, &tx_temperature, 2000);
-		xQueueSend(Queue1Handle, &tx_humidity, 1000);
 
-		xQueueSend(Queue2Handle, &soilHumidity, 2000);
+		xQueueSend(Queue1Handle, &LCD_Data, 0);
+		//xQueueSend(Queue1Handle, &LCD_Data.temperature, 1000);
+		//xQueueSend(Queue1Handle, &LCD_Data.humidity, 2000);
+
+		osDelay(1000);                //Bajar para testear
 	}
 }
 
 void UserInterfaceTask(void const * argument){
 
-
-	uint32_t soilHumidity;
 	int rx_key;
-	uint32_t rx_temperature;
-	uint32_t rx_humidity;
-	uint32_t rangohmin = 20;				//Hace falta poner static???????????????????????
-	uint32_t rangohmax = 30;
+	LCD_DataTypeDef LCD_Data;
+	Output_DataTypeDef Output_Data;
+	uint32_t rangohmin = 0;				//Hace falta poner static???????????????????????
+	uint32_t rangohmax = 80;
 	int estado_cortina;
 	int cortina_manual;
 
 	while(1){
 
-		if(xQueueReceive(Queue3Handle, &rx_key, 2000) == pdTRUE){
-			switch (rx_key) {
-			            case 65:
-			                LCD_Clear();
-			                LCD_SetCursor(1, 5);
-			                LCD_Print("MINIMO:", 1);
-			                HAL_Delay(2000);
 
-			                	if(xQueueReceive(Queue3Handle, &rx_key, 2000) == pdTRUE) {
-			                		switch (rx_key) {
-			                			case 49: rangohmin = 10; break;
-			                			case 50: rangohmin = 20; break;
-			                			case 51: rangohmin = 30; break;
-			                			case 52: rangohmin = 40; break;
-			                			case 53: rangohmin = 50; break;
-			                			case 54: rangohmin = 60; break;
-			                			case 55: rangohmin = 70; break;
-			                			case 56: rangohmin = 80; break;
-			                			case 57: rangohmin = 90; break;
-			                			case 48: rangohmin =  0; break;
-			                			default: rangohmin = 100;              //FALTA CASO 100
-			                		}
-			                	}
+		QueueSetMemberHandle_t who_unblocked = xQueueSelectFromSet(QueueSetHandle, 0); //si no es 0 es se rompe con Hard_Falut interrupt
+		if(who_unblocked == Queue1Handle){
+			if(xQueueReceive(Queue1Handle, &LCD_Data, 0)){
 
-			                LCD_SetCursor(1, 5);
-			                LCD_Print("MINIMO:%1u", rangohmin);
-			                LCD_SetCursor(2, 5);
-			                LCD_Print("MAXIMO:", 1);
+				LCD_Clear();
+				BSP_LCD_Humidity(LCD_Data.humidity);
+				BSP_LCD_Temperature(LCD_Data.temperature);
+				BSP_LCD_SoilHumidity(LCD_Data.soilHumidity);
+				xQueueReset(Queue1Handle);
 
-			                	if(xQueueReceive(Queue3Handle, &rx_key, 2000) == pdTRUE) {
-			                		switch (rx_key) {
-			                			case 49: rangohmax = 10; break;
-			                			case 50: rangohmax = 20; break;
-			                			case 51: rangohmax = 30; break;
-			                			case 52: rangohmax = 40; break;
-			                			case 53: rangohmax = 50; break;
-			                			case 54: rangohmax = 60; break;
-			                			case 55: rangohmax = 70; break;
-			                			case 56: rangohmax = 80; break;
-			                			case 57: rangohmax = 90; break;
-			                			case 48: rangohmax =  0; break;
-			                			default: rangohmax = 100;
-			                		}                                           //FALTA CASO ERROR QUE SEA MENOR AL MÍNIMO
-			                	}
-
-			                LCD_SetCursor(2, 5);
-			                LCD_Print("MAXIMO:%1u", rangohmax);
-			                HAL_Delay(4000);
-			                LCD_Clear();
-			                break;
-			            case 49:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 1", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 50:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 2", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 51:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 3", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 52:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 4", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 53:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 5", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 54:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 6", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 66:                                //TECLA 'B'
-			//                LCD_SetCursor(1, 1);
-			//                LCD_Send_String("Ingrese 1 por AM/2 por PM", STR_NOSLIDE);
-			//                do {
-			//                    tecla = keypad_read();
-			//                    switch (tecla) {
-			//                        case 0:             break;   //buen metodo?
-			//                        case 49: AMoPM = 1; break;
-			//                        case 50: AMoPM = 2; break;
-			//                        default:
-			//                            LCD_Clear();
-			//                            LCD_SetCursor(1, 1);
-			//                           HAL_Delay(3000);
-			//                            LCD_Clear();
-			//                            LCD_SetCursor(1, 1);
-			//                            LCD_Send_String("Ingrese 1 por AM/2 por PM", STR_NOSLIDE);
-			//                    }
-			//                } while (AMoPM != 1 && AMoPM != 2);
-			//                if (AMoPM == 1){
-			//                    LCD_SetCursor(1, 1);
-			//                    LCD_Send_String("Ingrese hora de riego", STR_NOSLIDE);
-			//                    do {
-			//                        tecla = keypad_read();
-			//                        switch (tecla) {
-			//                            case 49:
-			//                                                                  //PROBLEMA
-			//                                hora_de_riego = 1;
-			//                                break;
-			//                            case 50: hora_de_riego = 2; break;
-			//                            case 51: hora_de_riego = 3; break;
-			//                            case 52: hora_de_riego = 4; break;
-			//                            case 53: hora_de_riego = 5; break;
-			//                            case 54: hora_de_riego = 6; break;
-			//                            case 55: hora_de_riego = 7; break;
-			//                            case 56: hora_de_riego = 8; break;
-			//                            case 57: hora_de_riego = 9; break;
-			                //case 48: hora_de_riego =  0; break;
-			//                        }
-			//                    } while (tecla == 0);
-			//                }
-			//                if (AMoPM == 2){
-
-			//                }
-			                break;
-			            case 55:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 7", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 56:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 8", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 57:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 9", 1);
-			                HAL_Delay(2000);
-			                break;
-			            case 67:                                             //TECLA 'C'
-			                LCD_SetCursor(2, 5);
-			                LCD_Print("PESTICIDA", 1);
-			              //  htim2.Instance->CCR1 = 75; //ANGULO 90 GRADOS
-			                HAL_Delay(4000);
-			                break;
-			            case 68:                                             //TECLA 'D'
-			                if(estado_cortina == 0) {       //flag para ver si la cortina esta abierta o cerrada
-			                    LCD_SetCursor(2, 1);
-			                    LCD_Print("CERRANDO CORTINA", 1);
-			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
-			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); //  IN1
-			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); //  IN2
-			                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_5));   //espera hasta que la cortina toque fin de carrera con pull up
-			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //  ENA
-			                    estado_cortina = 1;                                                  //cambio de estado
-			                    if (cortina_manual == 0)   //revisar
-			                        cortina_manual = 1;        //bandera para saber si se quiere de manera manual la cortina abierta
-			                    else
-			                        cortina_manual = 0;
-			                }
-			                else {
-			                    LCD_SetCursor(2, 1);
-			                    LCD_Print("ABRIENDO CORTINA", 1);
-			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
-			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET); //  IN1
-			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); //  IN2
-			                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3));   //espera hasta que la cortina toque fin de carrera con pull up
-			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //  ENA
-			                    estado_cortina = 0;                                           //cambio de estado
-			                    if (cortina_manual == 0)   //revisar
-			                        cortina_manual = 1;
-			                    else
-			                        cortina_manual = 0;    //bandera para saber si se quiere de manera manual la cortina abierta
-			                }
-			                break;
-			            case 48:
-			                LCD_SetCursor(2, 1);
-			                LCD_Print("Ingreso 0", 1);
-			                HAL_Delay(2000);
-			                break;
-			        }
+			}
 		}
+		else if(who_unblocked == Queue3Handle){
+			if(xQueueReceive(Queue3Handle, &rx_key, 0) == pdTRUE){
+				switch (rx_key) {
+				            case 65:
+				                LCD_Clear();
+				                LCD_SetCursor(1, 5);
+				                LCD_Print("MINIMO:", 1);
+				                HAL_Delay(2000);
 
+				                	if(xQueueReceive(Queue3Handle, &rx_key, 2000) == pdTRUE) {
+				                		switch (rx_key) {
+				                			case 49: rangohmin = 10; break;
+				                			case 50: rangohmin = 20; break;
+				                			case 51: rangohmin = 30; break;
+				                			case 52: rangohmin = 40; break;
+				                			case 53: rangohmin = 50; break;
+				                			case 54: rangohmin = 60; break;
+				                			case 55: rangohmin = 70; break;
+				                			case 56: rangohmin = 80; break;
+				                			case 57: rangohmin = 90; break;
+				                			case 48: rangohmin =  0; break;
+				                			default: rangohmin = 100;              //FALTA CASO 100
+				                		}
+				                	}
 
-		xQueueSend(Queue4Handle, &rangohmin, 2000);
-		xQueueSend(Queue4Handle, &rangohmax, 2000);
+				                LCD_SetCursor(1, 5);
+				                LCD_Print("MINIMO:%1u", rangohmin);
+				                LCD_SetCursor(2, 5);
+				                LCD_Print("MAXIMO:", 1);
 
-		if(xQueueReceive(Queue1Handle, &rx_humidity, 2000) == pdTRUE){
-			if(xQueueReceive(Queue1Handle, &rx_temperature, 2000 == pdTRUE)){
-				if(xQueueReceive(Queue2Handle, &soilHumidity, 2000 == pdTRUE)){
+				                	if(xQueueReceive(Queue3Handle, &rx_key, 2000) == pdTRUE) {
+				                		switch (rx_key) {
+				                			case 49: rangohmax = 10; break;
+				                			case 50: rangohmax = 20; break;
+				                			case 51: rangohmax = 30; break;
+				                			case 52: rangohmax = 40; break;
+				                			case 53: rangohmax = 50; break;
+				                			case 54: rangohmax = 60; break;
+				                			case 55: rangohmax = 70; break;
+				                			case 56: rangohmax = 80; break;
+				                			case 57: rangohmax = 90; break;
+				                			case 48: rangohmax =  0; break;
+				                			default: rangohmax = 100;
+				                		}                                           //FALTA CASO ERROR QUE SEA MENOR AL MÍNIMO
+				                	}
 
-					BSP_LCD_Humidity(rx_humidity);
-					BSP_LCD_Temperature(rx_temperature);
-					BSP_LCD_SoilHumidity(soilHumidity);
+				                LCD_SetCursor(2, 5);
+				                LCD_Print("MAXIMO:%1u", rangohmax);
+				                HAL_Delay(4000);
+				                LCD_Clear();
+				                break;
+				            case 49:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 1", 1);
+				                HAL_Delay(2000);  //Falta poner lcd_clear
+				                break;
+				            case 50:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 2", 1);
+				                HAL_Delay(2000);
+				                break;
+				            case 51:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 3", 1);
+				                HAL_Delay(2000);
+				                break;
+				            case 52:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 4", 1);
+				                HAL_Delay(2000);
+				                break;
+				            case 53:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 5", 1);
+				                HAL_Delay(2000);
+				                break;
+				            case 54:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 6", 1);
+				                HAL_Delay(2000);
+				                break;
+				            case 66:                                //TECLA 'B'
+				//                LCD_SetCursor(1, 1);
+				//                LCD_Send_String("Ingrese 1 por AM/2 por PM", STR_NOSLIDE);
+				//                do {
+				//                    tecla = keypad_read();
+				//                    switch (tecla) {
+				//                        case 0:             break;   //buen metodo?
+				//                        case 49: AMoPM = 1; break;
+				//                        case 50: AMoPM = 2; break;
+				//                        default:
+				//                            LCD_Clear();
+				//                            LCD_SetCursor(1, 1);
+				//                           HAL_Delay(3000);
+				//                            LCD_Clear();
+				//                            LCD_SetCursor(1, 1);
+				//                            LCD_Send_String("Ingrese 1 por AM/2 por PM", STR_NOSLIDE);
+				//                    }
+				//                } while (AMoPM != 1 && AMoPM != 2);
+				//                if (AMoPM == 1){
+				//                    LCD_SetCursor(1, 1);
+				//                    LCD_Send_String("Ingrese hora de riego", STR_NOSLIDE);
+				//                    do {
+				//                        tecla = keypad_read();
+				//                        switch (tecla) {
+				//                            case 49:
+				//                                                                  //PROBLEMA
+				//                                hora_de_riego = 1;
+				//                                break;
+				//                            case 50: hora_de_riego = 2; break;
+				//                            case 51: hora_de_riego = 3; break;
+				//                            case 52: hora_de_riego = 4; break;
+				//                            case 53: hora_de_riego = 5; break;
+				//                            case 54: hora_de_riego = 6; break;
+				//                            case 55: hora_de_riego = 7; break;
+				//                            case 56: hora_de_riego = 8; break;
+				//                            case 57: hora_de_riego = 9; break;
+				                //case 48: hora_de_riego =  0; break;
+				//                        }
+				//                    } while (tecla == 0);
+				//                }
+				//                if (AMoPM == 2){
 
-					//break;
-
-				}
+				//                }
+				                break;
+				            case 55:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 7", 1);
+				                HAL_Delay(2000);
+				                break;
+				            case 56:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 8", 1);
+				                HAL_Delay(2000);
+				                break;
+				            case 57:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 9", 1);
+				                HAL_Delay(2000);
+				                break;
+				            case 67:                                             //TECLA 'C'
+				                LCD_SetCursor(2, 5);
+				                LCD_Print("PESTICIDA", 1);
+				              //  htim2.Instance->CCR1 = 75; //ANGULO 90 GRADOS
+				                HAL_Delay(4000);
+				                break;
+				            case 68:                                             //TECLA 'D'
+				                if(estado_cortina == 0) {       //flag para ver si la cortina esta abierta o cerrada
+				                    LCD_SetCursor(2, 1);
+				                    LCD_Print("CERRANDO CORTINA", 1);
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); //  IN1
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); //  IN2
+				                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_5));   //espera hasta que la cortina toque fin de carrera con pull up
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //  ENA
+				                    estado_cortina = 1;                                                  //cambio de estado
+				                    if (cortina_manual == 0)   //revisar
+				                        cortina_manual = 1;        //bandera para saber si se quiere de manera manual la cortina abierta
+				                    else
+				                        cortina_manual = 0;
+				                }
+				                else {
+				                    LCD_SetCursor(2, 1);
+				                    LCD_Print("ABRIENDO CORTINA", 1);
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET); //  IN1
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); //  IN2
+				                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3));   //espera hasta que la cortina toque fin de carrera con pull up
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //  ENA
+				                    estado_cortina = 0;                                           //cambio de estado
+				                    if (cortina_manual == 0)   //revisar
+				                        cortina_manual = 1;
+				                    else
+				                        cortina_manual = 0;    //bandera para saber si se quiere de manera manual la cortina abierta
+				                }
+				                break;
+				            case 48:
+				                LCD_SetCursor(2, 1);
+				                LCD_Print("Ingreso 0", 1);
+				                HAL_Delay(2000);
+				                break;
+				        }
 			}
 		}
 
+		Output_Data.rangohmin = rangohmin;
+		Output_Data.rangohmax = rangohmax;
+		Output_Data.soilHumidity = LCD_Data.soilHumidity;
 
+		xQueueSend(Queue4Handle, &Output_Data, 3000);
+
+		osDelay(5000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//		if(xQueueReceive(Queue1Handle, &LCD_Data, 0)){
+//
+//			BSP_LCD_Humidity(LCD_Data.humidity);
+//			BSP_LCD_Temperature(LCD_Data.temperature);
+//			BSP_LCD_SoilHumidity(LCD_Data.soilHumidity);
+//			xQueueReset(Queue1Handle);
+//		}
+//
+//
+//
+//
+//		if(xQueueReceive(Queue3Handle, &rx_key, 0) == pdTRUE){
+//			switch (rx_key) {
+//			            case 65:
+//			                LCD_Clear();
+//			                LCD_SetCursor(1, 5);
+//			                LCD_Print("MINIMO:", 1);
+//			                HAL_Delay(2000);
+//
+//			                	if(xQueueReceive(Queue3Handle, &rx_key, 2000) == pdTRUE) {
+//			                		switch (rx_key) {
+//			                			case 49: rangohmin = 10; break;
+//			                			case 50: rangohmin = 20; break;
+//			                			case 51: rangohmin = 30; break;
+//			                			case 52: rangohmin = 40; break;
+//			                			case 53: rangohmin = 50; break;
+//			                			case 54: rangohmin = 60; break;
+//			                			case 55: rangohmin = 70; break;
+//			                			case 56: rangohmin = 80; break;
+//			                			case 57: rangohmin = 90; break;
+//			                			case 48: rangohmin =  0; break;
+//			                			default: rangohmin = 100;              //FALTA CASO 100
+//			                		}
+//			                	}
+//
+//			                LCD_SetCursor(1, 5);
+//			                LCD_Print("MINIMO:%1u", rangohmin);
+//			                LCD_SetCursor(2, 5);
+//			                LCD_Print("MAXIMO:", 1);
+//
+//			                	if(xQueueReceive(Queue3Handle, &rx_key, 2000) == pdTRUE) {
+//			                		switch (rx_key) {
+//			                			case 49: rangohmax = 10; break;
+//			                			case 50: rangohmax = 20; break;
+//			                			case 51: rangohmax = 30; break;
+//			                			case 52: rangohmax = 40; break;
+//			                			case 53: rangohmax = 50; break;
+//			                			case 54: rangohmax = 60; break;
+//			                			case 55: rangohmax = 70; break;
+//			                			case 56: rangohmax = 80; break;
+//			                			case 57: rangohmax = 90; break;
+//			                			case 48: rangohmax =  0; break;
+//			                			default: rangohmax = 100;
+//			                		}                                           //FALTA CASO ERROR QUE SEA MENOR AL MÍNIMO
+//			                	}
+//
+//			                LCD_SetCursor(2, 5);
+//			                LCD_Print("MAXIMO:%1u", rangohmax);
+//			                HAL_Delay(4000);
+//			                LCD_Clear();
+//			                break;
+//			            case 49:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 1", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 50:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 2", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 51:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 3", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 52:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 4", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 53:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 5", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 54:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 6", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 66:                                //TECLA 'B'
+//			//                LCD_SetCursor(1, 1);
+//			//                LCD_Send_String("Ingrese 1 por AM/2 por PM", STR_NOSLIDE);
+//			//                do {
+//			//                    tecla = keypad_read();
+//			//                    switch (tecla) {
+//			//                        case 0:             break;   //buen metodo?
+//			//                        case 49: AMoPM = 1; break;
+//			//                        case 50: AMoPM = 2; break;
+//			//                        default:
+//			//                            LCD_Clear();
+//			//                            LCD_SetCursor(1, 1);
+//			//                           HAL_Delay(3000);
+//			//                            LCD_Clear();
+//			//                            LCD_SetCursor(1, 1);
+//			//                            LCD_Send_String("Ingrese 1 por AM/2 por PM", STR_NOSLIDE);
+//			//                    }
+//			//                } while (AMoPM != 1 && AMoPM != 2);
+//			//                if (AMoPM == 1){
+//			//                    LCD_SetCursor(1, 1);
+//			//                    LCD_Send_String("Ingrese hora de riego", STR_NOSLIDE);
+//			//                    do {
+//			//                        tecla = keypad_read();
+//			//                        switch (tecla) {
+//			//                            case 49:
+//			//                                                                  //PROBLEMA
+//			//                                hora_de_riego = 1;
+//			//                                break;
+//			//                            case 50: hora_de_riego = 2; break;
+//			//                            case 51: hora_de_riego = 3; break;
+//			//                            case 52: hora_de_riego = 4; break;
+//			//                            case 53: hora_de_riego = 5; break;
+//			//                            case 54: hora_de_riego = 6; break;
+//			//                            case 55: hora_de_riego = 7; break;
+//			//                            case 56: hora_de_riego = 8; break;
+//			//                            case 57: hora_de_riego = 9; break;
+//			                //case 48: hora_de_riego =  0; break;
+//			//                        }
+//			//                    } while (tecla == 0);
+//			//                }
+//			//                if (AMoPM == 2){
+//
+//			//                }
+//			                break;
+//			            case 55:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 7", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 56:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 8", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 57:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 9", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			            case 67:                                             //TECLA 'C'
+//			                LCD_SetCursor(2, 5);
+//			                LCD_Print("PESTICIDA", 1);
+//			              //  htim2.Instance->CCR1 = 75; //ANGULO 90 GRADOS
+//			                HAL_Delay(4000);
+//			                break;
+//			            case 68:                                             //TECLA 'D'
+//			                if(estado_cortina == 0) {       //flag para ver si la cortina esta abierta o cerrada
+//			                    LCD_SetCursor(2, 1);
+//			                    LCD_Print("CERRANDO CORTINA", 1);
+//			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
+//			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); //  IN1
+//			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); //  IN2
+//			                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_5));   //espera hasta que la cortina toque fin de carrera con pull up
+//			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //  ENA
+//			                    estado_cortina = 1;                                                  //cambio de estado
+//			                    if (cortina_manual == 0)   //revisar
+//			                        cortina_manual = 1;        //bandera para saber si se quiere de manera manual la cortina abierta
+//			                    else
+//			                        cortina_manual = 0;
+//			                }
+//			                else {
+//			                    LCD_SetCursor(2, 1);
+//			                    LCD_Print("ABRIENDO CORTINA", 1);
+//			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
+//			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET); //  IN1
+//			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); //  IN2
+//			                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3));   //espera hasta que la cortina toque fin de carrera con pull up
+//			                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //  ENA
+//			                    estado_cortina = 0;                                           //cambio de estado
+//			                    if (cortina_manual == 0)   //revisar
+//			                        cortina_manual = 1;
+//			                    else
+//			                        cortina_manual = 0;    //bandera para saber si se quiere de manera manual la cortina abierta
+//			                }
+//			                break;
+//			            case 48:
+//			                LCD_SetCursor(2, 1);
+//			                LCD_Print("Ingreso 0", 1);
+//			                HAL_Delay(2000);
+//			                break;
+//			        }
+//		}
 
 	}
-	osDelay(5000);
+
 }
 
 void AutomaticControlTask(void const * argument){
 
-	uint32_t rx_rangohmin;				//Hace falta poner static???????????????????????
-	uint32_t rx_rangohmax;
-	uint32_t soilHumidity;
+	Output_DataTypeDef Output_Data;
+
 	while(1){
-//		if(xQueueReceive(Queue4Handle, &rx_rangohmin, 2000) == pdTRUE){
-//			if(xQueueReceive(Queue4Handle, &rx_rangohmax, 2000) == pdTRUE){
-//				if(xQueueReceive(Queue2Handle, &soilHumidity, 2000) == pdTRUE){    //revisar si efectivamente recibe en 2 lados
-//
-//
-//
-//					if (soilHumidity < rx_rangohmax && soilHumidity > rx_rangohmin){
-//
-//
-//						LCD_Clear();
-//
-//						do {
-//							xQueueReceive(Queue2Handle, &soilHumidity, 2000);//ver caso si se quiere regar durante movimiento
-//			        		 //revisar hacer con while
-//			            	LCD_SetCursor(2, 5);
-//							LCD_Print("REGANDO", 1);
-//							BSP_TurnOn_Valve();
-//
-//						}
-//						while (soilHumidity <= rx_rangohmax && soilHumidity >= rx_rangohmin);
-//						BSP_TurnOff_Valve();
-//					}
-//
-//				}
-//			}
-//		}
+		if(xQueueReceive(Queue4Handle, &Output_Data, portMAX_DELAY) == pdTRUE){
+
+
+
+					if (Output_Data.soilHumidity < Output_Data.rangohmax && Output_Data.soilHumidity > Output_Data.rangohmin){
+
+
+						LCD_Clear();
+
+						do {
+							xQueueReceive(Queue4Handle, &Output_Data, 2000);//ver caso si se quiere regar durante movimiento
+			            	LCD_SetCursor(2, 5);
+							LCD_Print("REGANDO", 1);
+							BSP_TurnOn_Valve();
+
+						}
+						while (Output_Data.soilHumidity <= Output_Data.rangohmax && Output_Data.soilHumidity >= Output_Data.rangohmin);
+						BSP_TurnOff_Valve();
+					}
+
+
+
+		}
 		osDelay(500);
 	}
 }
@@ -432,8 +651,8 @@ void APP_Show_SystemIntro(){
     LCD_SetCursor(1,1);
     LCD_Clear();
     LCD_Print("Cargando Datos",1);
-    BSP_Delay(4000);
-    LCD_Clear();
+    BSP_Delay(2000);
+    //LCD_Clear();
 }
 
 

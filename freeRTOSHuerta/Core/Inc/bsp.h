@@ -25,6 +25,23 @@
 #define LD4_Pin GPIO_PIN_12
 
 
+typedef struct
+{
+	uint32_t temperature;
+	uint32_t humidity;
+	uint32_t soilHumidity;
+
+}LCD_DataTypeDef;
+
+typedef struct
+{
+	uint32_t rangohmin;
+	uint32_t rangohmax;
+	uint32_t soilHumidity;
+
+}Output_DataTypeDef;
+
+
 void BSP_Init(void);
 void BSP_Delay(uint16_t);
 void BSP_LCD_Temperature(uint32_t);

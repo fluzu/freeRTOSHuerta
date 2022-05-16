@@ -12,8 +12,8 @@
 
 typedef struct
 {
-	float Temperature;
-	float Humidity;
+	uint32_t Temperature;
+	uint32_t Humidity;
 }DHT_DataTypeDef;
 
 
