@@ -1,6 +1,6 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:255:12:xQueueGenericReset	24	static,ignoring_inline_asm
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:310:16:xQueueGenericCreateStatic	64	static,ignoring_inline_asm
-../Middlewares/Third_Party/FreeRTOS/Source/queue.c:368:16:xQueueGenericCreate	48	static,ignoring_inline_asm
+../Middlewares/Third_Party/FreeRTOS/Source/queue.c:368:15:xQueueGenericCreate	48	static,ignoring_inline_asm
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:429:13:prvInitialiseNewQueue	24	static
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:473:14:prvInitialiseMutex	16	static
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:503:16:xQueueCreateMutex	32	static
