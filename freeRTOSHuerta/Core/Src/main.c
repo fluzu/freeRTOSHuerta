@@ -75,8 +75,6 @@ int main(void)
   osThreadDef(AutomaticControlTask, AutomaticControlTask, osPriorityHigh, 0, 128);
   AutomaticControlTaskHandle = osThreadCreate(osThread(AutomaticControlTask), NULL);
 
-
-
   osKernelStart();
 
 
@@ -115,9 +113,9 @@ int main(void)
   * @retval None
   */
 /* USER CODE END Header_StartDefaultTask */
+
 void KeypadTask(void const * argument)
 {
-
 	 int key;
 
   for(;;)
@@ -128,10 +126,7 @@ void KeypadTask(void const * argument)
 
 		xQueueSend(Queue3Handle, &key, 5000);  // sacar pormax_delay que es puro bloqueante
 	}
-
     osDelay(10);
-
-
   }
 
 }
@@ -141,22 +136,17 @@ void SensorsTask(void const * argument){
 	DHT_DataTypeDef DHT22;
 	LCD_DataTypeDef LCD_Data;
 
-
 	while(1){
 
-		DHT_GetData(&DHT22);
-		LCD_Data.humidity = DHT22.Humidity;
-		LCD_Data.temperature = DHT22.Temperature;
+		//DHT_GetData(&DHT22);
+		//LCD_Data.humidity = DHT22.Humidity;
+		//LCD_Data.temperature = DHT22.Temperature;
 		LCD_Data.soilHumidity = APP_SoilHumidity();
-
-
-
 
 		xQueueSend(Queue1Handle, &LCD_Data, 0);
 		xQueueSend(Queue5Handle, &LCD_Data.soilHumidity, 0);
 
-
-		osDelay(1000);                //Bajar para testear
+		osDelay(1000);                                                         //Bajar para testear
 	}
 }
 
@@ -172,16 +162,14 @@ void UserInterfaceTask(void const * argument){
 
 	while(1){
 
-
 		QueueSetMemberHandle_t who_unblocked = xQueueSelectFromSet(QueueSetHandle, 0); //si no es 0 es se rompe con Hard_Falut interrupt
 		if(who_unblocked == Queue1Handle){
 			if(xQueueReceive(Queue1Handle, &LCD_Data, 0)){
 
 				LCD_Clear();
-				BSP_LCD_Humidity(LCD_Data.humidity);
-				BSP_LCD_Temperature(LCD_Data.temperature);
+				//BSP_LCD_Humidity(LCD_Data.humidity);
+				//BSP_LCD_Temperature(LCD_Data.temperature);
 				BSP_LCD_SoilHumidity(LCD_Data.soilHumidity);
-
 
 			}
 		}
@@ -209,9 +197,9 @@ void UserInterfaceTask(void const * argument){
 				                			case 56: rangohmin = 80; break;
 				                			case 57: rangohmin = 90; break;
 				                			case 48: rangohmin =  0; break;
-				                			default: rangohmin = 100;              //FALTA CASO 100
+				                			default: rangohmin = 100;                                   //FALTA CASO 100
 				                		}
-				                	}//revisar corchete
+				                	}                                                                   //revisar corchete
 				                }
 				                LCD_SetCursor(1, 5);
 				                LCD_Print("MINIMO:%1u", rangohmin);
@@ -235,7 +223,7 @@ void UserInterfaceTask(void const * argument){
 				                			case 57: rangohmax = 90; break;
 				                			case 48: rangohmax =  0; break;
 				                			default: rangohmax = 100;
-				                		}                                           //FALTA CASO ERROR QUE SEA MENOR AL MÍNIMO
+				                		}                                                                 //FALTA CASO ERROR QUE SEA MENOR AL MÍNIMO
 				                	}
 				                }
 				                LCD_SetCursor(2, 5);
@@ -405,18 +393,18 @@ void UserInterfaceTask(void const * argument){
 				                BSP_LCD_SoilHumidity(LCD_Data.soilHumidity);
 				                break;
 				            case 68:                                             //TECLA 'D'
-				                if(estado_cortina == 0) {       //flag para ver si la cortina esta abierta o cerrada
+				                if(estado_cortina == 0) {     										  //flag para ver si la cortina esta abierta o cerrada
 				                    LCD_Clear();
 				                	LCD_SetCursor(2, 1);
 				                    LCD_Print("CERRANDO CORTINA", 1);
-				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
-				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); //  IN1
-				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); //  IN2
-				                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_5));   //espera hasta que la cortina toque fin de carrera con pull up
-				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //  ENA
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); 				//  ENA
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); 				//  IN1
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);				 //  IN2
+				                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_5));   						//espera hasta que la cortina toque fin de carrera con pull up
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); 				//  ENA
 				                    estado_cortina = 1;                                                  //cambio de estado
-				                    if (cortina_manual == 0)   //revisar
-				                        cortina_manual = 1;        //bandera para saber si se quiere de manera manual la cortina abierta
+				                    if (cortina_manual == 0)  										 //revisar
+				                        cortina_manual = 1;       									 //bandera para saber si se quiere de manera manual la cortina abierta
 				                    else
 				                        cortina_manual = 0;
 				                }
@@ -424,16 +412,16 @@ void UserInterfaceTask(void const * argument){
 				                	LCD_Clear();
 				                    LCD_SetCursor(2, 1);
 				                    LCD_Print("ABRIENDO CORTINA", 1);
-				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); //  ENA
-				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET); //  IN1
-				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); //  IN2
-				                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3));   //espera hasta que la cortina toque fin de carrera con pull up
-				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); //  ENA
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); 			//  ENA
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET); 				//  IN1
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); 			//  IN2
+				                    while (!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3));  						 //espera hasta que la cortina toque fin de carrera con pull up
+				                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); 			//  ENA
 				                    estado_cortina = 0;                                           //cambio de estado
-				                    if (cortina_manual == 0)   //revisar
+				                    if (cortina_manual == 0)   										//revisar
 				                        cortina_manual = 1;
 				                    else
-				                        cortina_manual = 0;    //bandera para saber si se quiere de manera manual la cortina abierta
+				                        cortina_manual = 0;   										 //bandera para saber si se quiere de manera manual la cortina abierta
 				                }
 				                break;
 				            case 48:
@@ -450,16 +438,13 @@ void UserInterfaceTask(void const * argument){
 				        }
 			}
 		}
-
 		Output_Data.rangohmin = rangohmin;
 		Output_Data.rangohmax = rangohmax;
 		Output_Data.soilHumidity = LCD_Data.soilHumidity;
 
-		xQueueSend(Queue4Handle, &Output_Data, 3000);
-
+		xQueueSend(Queue4Handle, &Output_Data, 3000); // revisar como incide el 3000 en el comportamiento
 
 		osDelay(5000);
-
 	}
 
 }
@@ -472,10 +457,7 @@ void AutomaticControlTask(void const * argument){
 	while(1){
 		if(xQueueReceive(Queue4Handle, &Output_Data, portMAX_DELAY) == pdTRUE){
 
-
-
 					if (Output_Data.soilHumidity < Output_Data.rangohmax && Output_Data.soilHumidity > Output_Data.rangohmin){
-
 
 						LCD_Clear();
 
@@ -491,9 +473,6 @@ void AutomaticControlTask(void const * argument){
 						BSP_TurnOff_Valve();
 						LCD_Clear();
 					}
-
-
-
 		}
 	}
 }
@@ -519,7 +498,7 @@ void APP_Show_SystemIntro(){
     LCD_SetCursor(1,1);
     LCD_Clear();
     LCD_Print("Cargando Datos",1);
-    BSP_Delay(2000);
+    //BSP_Delay(2000);
     //LCD_Clear();
 }
 

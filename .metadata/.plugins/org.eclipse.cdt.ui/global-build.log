@@ -38,3 +38,284 @@ Finished building: default.size.stdout
  
 Finished building: freeRTOSHuerta.list
  
+17:50:37 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40572	    148	  18964	  59684	   e924	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+17:51:59 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40572	    148	  18964	  59684	   e924	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+18:21:05 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  40572	    148	  18964	  59684	   e924	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+16:41:24 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/bsp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/bsp.d" -MT"Core/Src/bsp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/bsp.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40620	    148	  18964	  59732	   e954	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+16:50:15 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40636	    148	  18964	  59748	   e964	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+16:51:34 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  40636	    148	  18964	  59748	   e964	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+16:52:03 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40652	    148	  18964	  59764	   e974	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+16:53:19 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40636	    148	  18964	  59748	   e964	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+17:12:49 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40524	    148	  18964	  59636	   e8f4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+17:21:01 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40508	    148	  18964	  59620	   e8e4	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+17:28:26 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40620	    148	  18964	  59732	   e954	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+18:14:20 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  40620	    148	  18964	  59732	   e954	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+09:21:35 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  40620	    148	  18964	  59732	   e954	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+09:40:01 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'SensorsTask':
+../Core/Src/main.c:136:18: warning: unused variable 'DHT22' [-Wunused-variable]
+  136 |  DHT_DataTypeDef DHT22;
+      |                  ^~~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37852	    148	  18956	  56956	   de7c	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+09:53:54 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37852	    148	  18956	  56956	   de7c	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+09:58:48 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37852	    148	  18956	  56956	   de7c	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+10:08:13 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+../Core/Src/stm32f4xx_it.c: In function 'HardFault_Handler':
+../Core/Src/stm32f4xx_it.c:94:4: warning: implicit declaration of function 'LCD_Clear' [-Wimplicit-function-declaration]
+   94 |    LCD_Clear();
+      |    ^~~~~~~~~
+../Core/Src/stm32f4xx_it.c:95:4: warning: implicit declaration of function 'LCD_SetCursor' [-Wimplicit-function-declaration]
+   95 |    LCD_SetCursor(1, 3);
+      |    ^~~~~~~~~~~~~
+../Core/Src/stm32f4xx_it.c:96:4: warning: implicit declaration of function 'LCD_Print' [-Wimplicit-function-declaration]
+   96 |    LCD_Print("HardFault", 0);
+      |    ^~~~~~~~~
+../Core/Src/main.c: In function 'SensorsTask':
+../Core/Src/main.c:136:18: warning: unused variable 'DHT22' [-Wunused-variable]
+  136 |  DHT_DataTypeDef DHT22;
+      |                  ^~~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37784	    148	  18956	  56888	   de38	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+10:09:16 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+../Core/Src/stm32f4xx_it.c: In function 'HardFault_Handler':
+../Core/Src/stm32f4xx_it.c:95:4: warning: implicit declaration of function 'LCD_Clear' [-Wimplicit-function-declaration]
+   95 |    LCD_Clear();
+      |    ^~~~~~~~~
+../Core/Src/stm32f4xx_it.c:96:4: warning: implicit declaration of function 'LCD_SetCursor' [-Wimplicit-function-declaration]
+   96 |    LCD_SetCursor(1, 3);
+      |    ^~~~~~~~~~~~~
+../Core/Src/stm32f4xx_it.c:97:4: warning: implicit declaration of function 'LCD_Print' [-Wimplicit-function-declaration]
+   97 |    LCD_Print("HardFault", 0);
+      |    ^~~~~~~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37784	    148	  18956	  56888	   de38	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+10:19:43 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
+   text	   data	    bss	    dec	    hex	filename
+  37784	    148	  18956	  56888	   de38	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+Finished building: freeRTOSHuerta.list
+ 
+10:20:46 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37784	    148	  18956	  56888	   de38	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+10:21:23 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37784	    148	  18956	  56888	   de38	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
+11:22:48 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+make -j4 all 
+arm-none-eabi-size   freeRTOSHuerta.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37784	    148	  18956	  56888	   de38	freeRTOSHuerta.elf
+Finished building: default.size.stdout
+ 
