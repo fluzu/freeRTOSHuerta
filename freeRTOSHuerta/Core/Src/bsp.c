@@ -92,23 +92,23 @@ void BSP_Delay(uint16_t Delay){
     delay_ms(Delay);
 }
 
-void BSP_LCD_Temperature(uint32_t temperatura) {
+void BSP_LCD_Temperature(uint8_t temperatura) {
     LCD_SetCursor(1, 4);
     LCD_Print("Grados:%1uC", temperatura);
 }
 
-void BSP_LCD_Humidity(uint32_t humedad) {
+void BSP_LCD_Humidity(uint8_t humedad) {
     LCD_SetCursor(2, 1);
     LCD_Print("HA:%1u%%", humedad);
 }
 
-void BSP_LCD_SoilHumidity(uint32_t soilHumidity){
+void BSP_LCD_SoilHumidity(uint8_t soilHumidity){
 	LCD_SetCursor(2, 10);
 	LCD_Print("HS:%1u%%", soilHumidity);
 }
 
 
-uint32_t BSP_Get_percentageHS(uint32_t value){
+uint8_t BSP_Get_percentageHS(uint16_t value){
     int hummin = 4095;                      //REVISAR TIPO DE DATO
     int hummax = 2300;                      //REVISAR Maximo y Minimo en especial maximo
 //#define humminp = 0
@@ -182,8 +182,8 @@ void BSP_CoverFromTemperature(int estado_cortina, int cortina_manual){
     }
 }
 
-uint32_t BSP_SoilHumidity(){
-	uint32_t value_adc[3];
+uint8_t BSP_SoilHumidity(){
+	uint16_t value_adc[3];
     HAL_ADC_Start(&hadc1);
     if(HAL_ADC_PollForConversion(&hadc1, 5) == HAL_OK){     //incilur esta parte en el solenoide para hecr while?
         value_adc[0] = HAL_ADC_GetValue(&hadc1);

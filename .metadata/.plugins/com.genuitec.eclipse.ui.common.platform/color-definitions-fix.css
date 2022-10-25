@@ -1303,11 +1303,11 @@ IEclipsePreferences#org-eclipse-cdt-dsf-ui {
 IEclipsePreferences#org-eclipse-cdt-make-ui {
 	preferences:
 		'org.eclipse.cdt.make.ui.editor.comment=140,63,200'
-		'org.eclipse.cdt.make.ui.editor.macro_ref=241,196,56'
-		'org.eclipse.cdt.make.ui.editor.macro_def=241,196,56'
 		'org.eclipse.cdt.make.ui.editor.default=255,255,255'
 		'org.eclipse.cdt.make.ui.editor.function=247,197,39'
 		'org.eclipse.cdt.make.ui.editor.keyword=236,105,30'
+		'org.eclipse.cdt.make.ui.editor.macro_def=241,196,56'
+		'org.eclipse.cdt.make.ui.editor.macro_ref=241,196,56'
 }
 IEclipsePreferences#org-eclipse-cdt-ui {
 	preferences:

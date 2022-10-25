@@ -1,10 +1,58 @@
-11:22:48 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+14:11:14 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
 make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:50:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+   50 |   xTaskCreate(KeypadTask, "KeypadTask", 512, NULL, 0, NULL);
+      |               ^~~~~~~~~~
+      |               |
+      |               void (*)(const void *)
+In file included from ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:40,
+                 from ../Core/Src/main.c:5:
+../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:330:41: note: expected 'TaskFunction_t' {aka 'void (*)(void *)'} but argument is of type 'void (*)(const void *)'
+  330 |  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~
+../Core/Src/main.c:51:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+   51 |   xTaskCreate(SensorsTask, "SensorsTask", 512, NULL, 1, NULL);
+      |               ^~~~~~~~~~~
+      |               |
+      |               void (*)(const void *)
+In file included from ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:40,
+                 from ../Core/Src/main.c:5:
+../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:330:41: note: expected 'TaskFunction_t' {aka 'void (*)(void *)'} but argument is of type 'void (*)(const void *)'
+  330 |  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~
+../Core/Src/main.c:52:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+   52 |   xTaskCreate(UserInterfaceTask, "UserInterfaceTask", 1280, NULL, 2, NULL);
+      |               ^~~~~~~~~~~~~~~~~
+      |               |
+      |               void (*)(const void *)
+In file included from ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:40,
+                 from ../Core/Src/main.c:5:
+../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:330:41: note: expected 'TaskFunction_t' {aka 'void (*)(void *)'} but argument is of type 'void (*)(const void *)'
+  330 |  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~
+../Core/Src/main.c:53:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+   53 |   xTaskCreate(AutomaticControlTask, "AutomaticControlTask", 1024, NULL, 3, NULL);
+      |               ^~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               void (*)(const void *)
+In file included from ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:40,
+                 from ../Core/Src/main.c:5:
+../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:330:41: note: expected 'TaskFunction_t' {aka 'void (*)(void *)'} but argument is of type 'void (*)(const void *)'
+  330 |  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~
+arm-none-eabi-gcc -o "freeRTOSHuerta.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Facu\STM32CubeIDE\workspace_1.9.0\freeRTOSHuerta\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="freeRTOSHuerta.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: freeRTOSHuerta.elf
+ 
 arm-none-eabi-size   freeRTOSHuerta.elf 
+arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
    text	   data	    bss	    dec	    hex	filename
-  37784	    148	  18956	  56888	   de38	freeRTOSHuerta.elf
+  40280	    148	  18948	  59376	   e7f0	freeRTOSHuerta.elf
 Finished building: default.size.stdout
  
+Finished building: freeRTOSHuerta.list
+ 
 
-11:22:51 Build Finished. 0 errors, 0 warnings. (took 3s.87ms)
+14:11:18 Build Finished. 0 errors, 4 warnings. (took 3s.988ms)
 

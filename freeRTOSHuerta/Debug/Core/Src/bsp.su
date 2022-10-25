@@ -4,10 +4,10 @@
 ../Core/Src/bsp.c:95:6:BSP_LCD_Temperature	16	static
 ../Core/Src/bsp.c:100:6:BSP_LCD_Humidity	16	static
 ../Core/Src/bsp.c:105:6:BSP_LCD_SoilHumidity	16	static
-../Core/Src/bsp.c:111:10:BSP_Get_percentageHS	32	static
+../Core/Src/bsp.c:111:9:BSP_Get_percentageHS	32	static
 ../Core/Src/bsp.c:124:6:BSP_Detect_Movement	8	static
 ../Core/Src/bsp.c:155:6:BSP_CoverFromTemperature	16	static
-../Core/Src/bsp.c:185:10:BSP_SoilHumidity	24	static
+../Core/Src/bsp.c:185:9:BSP_SoilHumidity	16	static
 ../Core/Src/bsp.c:196:6:BSP_Irrigation	32	static
 ../Core/Src/bsp.c:221:6:BSP_TurnOn_Valve	8	static
 ../Core/Src/bsp.c:227:6:BSP_TurnOff_Valve	8	static

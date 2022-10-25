@@ -1,7 +1,9 @@
 
 #include "main.h"
-#include "cmsis_os.h"
+
+#include "FreeRTOS.h"
 #include "queue.h"
+#include "task.h"
 #include "bsp.h"
 #include "lcd_i2cModule.h"
 #include "DHT.h"
@@ -12,28 +14,13 @@
 #include "stm32f4xx_hal.h"  //Eliminar mas tarde
 #include "stm32f4xx.h"
 
-//void *DriverMotor_ENA;
-//void *DriverMotor_IN1;
-//void *DriverMotor_IN2;
-
-//void *DriverValve_ENA;
-//void *DriverValve_IN1;
-//void *DriverValve_IN2;
 
 
 
-
-osThreadId KeypadTaskHandle;
-osThreadId SensorsTaskHandle;
-osThreadId UserInterfaceTaskHandle;
-osThreadId AutomaticControlTaskHandle;
-
-
-
-osMessageQId Queue1Handle;
-osMessageQId Queue3Handle;
-osMessageQId Queue4Handle;
-osMessageQId Queue5Handle;
+QueueHandle_t Queue1Handle;
+QueueHandle_t Queue3Handle;
+QueueHandle_t Queue4Handle;
+QueueHandle_t Queue5Handle;
 
 QueueSetHandle_t QueueSetHandle;
 
@@ -43,8 +30,6 @@ void SensorsTask(void const * argument);
 void UserInterfaceTask(void const * argument);
 void AutomaticControlTask(void const * argument);
 
-
-
 int main(void)
 {
 
@@ -53,29 +38,28 @@ int main(void)
 
 
   Queue1Handle = xQueueCreate(3, sizeof(LCD_DataTypeDef));
-  Queue3Handle = xQueueCreate(3, sizeof(int));
+  Queue3Handle = xQueueCreate(3, sizeof(uint8_t));
   Queue4Handle = xQueueCreate(3, sizeof(Output_DataTypeDef));
-  Queue5Handle = xQueueCreate(3, sizeof(uint32_t));
+  Queue5Handle = xQueueCreate(3, sizeof(uint8_t));
 
-  QueueSetHandle = xQueueCreateSet(6); // revisar si no es mucho
+  QueueSetHandle = xQueueCreateSet(6);
 
   xQueueAddToSet(Queue1Handle, QueueSetHandle);
   xQueueAddToSet(Queue3Handle, QueueSetHandle);
 
-  osThreadDef(KeypadTask, KeypadTask, osPriorityLow, 0, 128);
-  KeypadTaskHandle = osThreadCreate(osThread(KeypadTask), NULL);
+  xTaskCreate(KeypadTask, "KeypadTask", 512, NULL, 0, NULL);
+  xTaskCreate(SensorsTask, "SensorsTask", 512, NULL, 1, NULL);
+  xTaskCreate(UserInterfaceTask, "UserInterfaceTask", 1280, NULL, 2, NULL);
+  xTaskCreate(AutomaticControlTask, "AutomaticControlTask", 1024, NULL, 3, NULL);
 
 
-  osThreadDef(SensorsTask, SensorsTask, osPriorityBelowNormal, 0, 128);
-  SensorsTaskHandle = osThreadCreate(osThread(SensorsTask), NULL);
 
-  osThreadDef(UserInterfaceTask, UserInterfaceTask, osPriorityNormal, 0, 128);
-  UserInterfaceTaskHandle = osThreadCreate(osThread(UserInterfaceTask), NULL);
 
-  osThreadDef(AutomaticControlTask, AutomaticControlTask, osPriorityHigh, 0, 128);
-  AutomaticControlTaskHandle = osThreadCreate(osThread(AutomaticControlTask), NULL);
 
-  osKernelStart();
+
+
+
+  vTaskStartScheduler();
 
 
   while (1)
@@ -106,27 +90,22 @@ int main(void)
   /* USER CODE END Callback 1 */
 //}
 
-/* USER CODE BEGIN Header_StartDefaultTask */
-/**
-  * @brief  Function implementing the defaultTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-/* USER CODE END Header_StartDefaultTask */
 
 void KeypadTask(void const * argument)
 {
-	 int key;
+	uint8_t key;
+	//static char cBuffer[ 256 ];
 
   for(;;)
   {
+	 // vTaskList( cBuffer );
 	  key = keypad_read();
 
 	if(key != 0){
 
 		xQueueSend(Queue3Handle, &key, 5000);  // sacar pormax_delay que es puro bloqueante
 	}
-    osDelay(10);
+    vTaskDelay(10);
   }
 
 }
@@ -138,37 +117,37 @@ void SensorsTask(void const * argument){
 
 	while(1){
 
-		//DHT_GetData(&DHT22);
-		//LCD_Data.humidity = DHT22.Humidity;
-		//LCD_Data.temperature = DHT22.Temperature;
+		DHT_GetData(&DHT22);
+		LCD_Data.humidity = DHT22.Humidity;
+		LCD_Data.temperature = DHT22.Temperature;
 		LCD_Data.soilHumidity = APP_SoilHumidity();
 
 		xQueueSend(Queue1Handle, &LCD_Data, 0);
 		xQueueSend(Queue5Handle, &LCD_Data.soilHumidity, 0);
 
-		osDelay(1000);                                                         //Bajar para testear
+		vTaskDelay(1000);                                                         //Bajar para testear
 	}
 }
 
 void UserInterfaceTask(void const * argument){
 
-	int rx_key;
+	uint8_t rx_key;
 	LCD_DataTypeDef LCD_Data;
 	Output_DataTypeDef Output_Data;
-	uint32_t rangohmin = 0;
-	uint32_t rangohmax = 30;
-	int estado_cortina;
-	int cortina_manual;
+	uint8_t rangohmin = 0; //Subir para que funcione el riego
+	uint8_t rangohmax = 20;
+	uint8_t estado_cortina;
+	uint8_t cortina_manual;
 
 	while(1){
 
-		QueueSetMemberHandle_t who_unblocked = xQueueSelectFromSet(QueueSetHandle, 0); //si no es 0 es se rompe con Hard_Falut interrupt
+		QueueSetMemberHandle_t who_unblocked = xQueueSelectFromSet(QueueSetHandle, portMAX_DELAY); //si no es 0 es se rompe con Hard_Falut interrupt
 		if(who_unblocked == Queue1Handle){
 			if(xQueueReceive(Queue1Handle, &LCD_Data, 0)){
 
 				LCD_Clear();
-				//BSP_LCD_Humidity(LCD_Data.humidity);
-				//BSP_LCD_Temperature(LCD_Data.temperature);
+				BSP_LCD_Humidity(LCD_Data.humidity);
+				BSP_LCD_Temperature(LCD_Data.temperature);
 				BSP_LCD_SoilHumidity(LCD_Data.soilHumidity);
 
 			}
@@ -176,56 +155,58 @@ void UserInterfaceTask(void const * argument){
 		else if(who_unblocked == Queue3Handle){
 			if(xQueueReceive(Queue3Handle, &rx_key, 0) == pdTRUE){
 				switch (rx_key) {
+
 				            case 65:
 				                LCD_Clear();
 				                LCD_SetCursor(1, 5);
 				                LCD_Print("MINIMO:", 1);
 				                HAL_Delay(2000);
+				                do{
+				                	who_unblocked = xQueueSelectFromSet(QueueSetHandle, portMAX_DELAY);
+				                	if(who_unblocked == Queue3Handle){
 
-				                who_unblocked = xQueueSelectFromSet(QueueSetHandle, portMAX_DELAY);
-				                if(who_unblocked == Queue3Handle){
-
-				                	if(xQueueReceive(Queue3Handle, &rx_key, 0) == pdTRUE) {
-				                		switch (rx_key) {
-				                			case 49: rangohmin = 10; break;
-				                			case 50: rangohmin = 20; break;
-				                			case 51: rangohmin = 30; break;
-				                			case 52: rangohmin = 40; break;
-				                			case 53: rangohmin = 50; break;
-				                			case 54: rangohmin = 60; break;
-				                			case 55: rangohmin = 70; break;
-				                			case 56: rangohmin = 80; break;
-				                			case 57: rangohmin = 90; break;
-				                			case 48: rangohmin =  0; break;
-				                			default: rangohmin = 100;                                   //FALTA CASO 100
-				                		}
-				                	}                                                                   //revisar corchete
-				                }
+				                		if(xQueueReceive(Queue3Handle, &rx_key, 0) == pdTRUE) {
+				                			switch (rx_key) {
+				                				case 49: rangohmin = 10; break;
+				                				case 50: rangohmin = 20; break;
+				                				case 51: rangohmin = 30; break;
+				                				case 52: rangohmin = 40; break;
+				                				case 53: rangohmin = 50; break;
+				                				case 54: rangohmin = 60; break;
+				                				case 55: rangohmin = 70; break;
+				                				case 56: rangohmin = 80; break;
+				                				case 57: rangohmin = 90; break;
+				                				case 48: rangohmin =  0; break;
+				                				default: rangohmin = 100;                                   //FALTA CASO 100
+				                			}
+				                		}  	                                                                 //revisar corchete
+				                	}
+				                } while (rx_key == 0 || rangohmin == 100);
 				                LCD_SetCursor(1, 5);
 				                LCD_Print("MINIMO:%1u", rangohmin);
 				                LCD_SetCursor(2, 5);
 				                LCD_Print("MAXIMO:", 1);
 
-
-				                who_unblocked = xQueueSelectFromSet(QueueSetHandle, portMAX_DELAY);
-				                if(who_unblocked == Queue3Handle){
-
-				                	if(xQueueReceive(Queue3Handle, &rx_key, 0) == pdTRUE) {
-				                		switch (rx_key) {
-				                			case 49: rangohmax = 10; break;
-				                			case 50: rangohmax = 20; break;
-				                			case 51: rangohmax = 30; break;
-				                			case 52: rangohmax = 40; break;
-				                			case 53: rangohmax = 50; break;
-				                			case 54: rangohmax = 60; break;
-				                			case 55: rangohmax = 70; break;
-				                			case 56: rangohmax = 80; break;
-				                			case 57: rangohmax = 90; break;
-				                			case 48: rangohmax =  0; break;
-				                			default: rangohmax = 100;
-				                		}                                                                 //FALTA CASO ERROR QUE SEA MENOR AL MÍNIMO
-				                	}
-				                }
+				                do {
+				                	who_unblocked = xQueueSelectFromSet(QueueSetHandle, portMAX_DELAY);
+				                		if(who_unblocked == Queue3Handle){
+				                			if(xQueueReceive(Queue3Handle, &rx_key, 0) == pdTRUE) {
+				                				switch (rx_key) {
+				                				case 49: rangohmax = 10; break;
+				                				case 50: rangohmax = 20; break;
+				                				case 51: rangohmax = 30; break;
+				                				case 52: rangohmax = 40; break;
+				                				case 53: rangohmax = 50; break;
+				                				case 54: rangohmax = 60; break;
+				                				case 55: rangohmax = 70; break;
+				                				case 56: rangohmax = 80; break;
+				                				case 57: rangohmax = 90; break;
+				                				case 48: rangohmax =  0; break;
+				                				default: rangohmax = 100;
+				                				}                                                                 //FALTA CASO ERROR QUE SEA MENOR AL MÍNIMO
+				                			}
+				                		}
+				                } while (rangohmax <= rangohmin);
 				                LCD_SetCursor(2, 5);
 				                LCD_Print("MAXIMO:%1u", rangohmax);
 				                HAL_Delay(4000);
@@ -444,7 +425,7 @@ void UserInterfaceTask(void const * argument){
 
 		xQueueSend(Queue4Handle, &Output_Data, 3000); // revisar como incide el 3000 en el comportamiento
 
-		osDelay(5000);
+		vTaskDelay(5000);
 	}
 
 }
@@ -452,33 +433,29 @@ void UserInterfaceTask(void const * argument){
 void AutomaticControlTask(void const * argument){
 
 	Output_DataTypeDef Output_Data;
-	uint32_t irrigationHumidity;
+	uint8_t irrigationHumidity;
 
 	while(1){
 		if(xQueueReceive(Queue4Handle, &Output_Data, portMAX_DELAY) == pdTRUE){
 
-					if (Output_Data.soilHumidity < Output_Data.rangohmax && Output_Data.soilHumidity > Output_Data.rangohmin){
-
+					if (Output_Data.soilHumidity < Output_Data.rangohmin){
 						LCD_Clear();
-
 						do {
-
+							LCD_Clear();
 			            	LCD_SetCursor(2, 5);
 							LCD_Print("REGANDO", 1);
 							BSP_TurnOn_Valve();
-							xQueueReceive(Queue5Handle, &irrigationHumidity, 2000);
+							BSP_Delay(2000);
+							xQueueReceive(Queue5Handle, &irrigationHumidity, 100); //importante que sea 0
 
 						}
-						while (irrigationHumidity <= Output_Data.rangohmax && irrigationHumidity >= Output_Data.rangohmin);
+						while (irrigationHumidity <= Output_Data.rangohmax);
 						BSP_TurnOff_Valve();
 						LCD_Clear();
 					}
 		}
 	}
 }
-
-
-
 
 void APP_Timer10ms(){ //Borrar
 
@@ -498,7 +475,7 @@ void APP_Show_SystemIntro(){
     LCD_SetCursor(1,1);
     LCD_Clear();
     LCD_Print("Cargando Datos",1);
-    //BSP_Delay(2000);
+    BSP_Delay(2000);
     //LCD_Clear();
 }
 
@@ -511,8 +488,8 @@ void APP_CoverFromTemperature(int estado_cortina, int cortina_manual){
     BSP_CoverFromTemperature(estado_cortina, cortina_manual);
 }
 
-uint32_t APP_SoilHumidity(){
-	int SoilHumidity;
+uint8_t APP_SoilHumidity(){
+	uint8_t SoilHumidity;
 	SoilHumidity = BSP_SoilHumidity();
 	return SoilHumidity;
 }

@@ -25,7 +25,7 @@ void APP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_ma
 void APP_Show_DHT22();
 void APP_Show_Movement();
 void APP_CoverFromTemperature(int estado_cortina, int cortina_manual);
-uint32_t APP_SoilHumidity();
+uint8_t APP_SoilHumidity();
 void APP_Irrigation(int rangohmin, int rangohmax);
 
 void Error_Handler(void);
