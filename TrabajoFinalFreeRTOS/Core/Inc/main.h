@@ -54,7 +54,7 @@ extern "C" {
 void APP_Show_SystemIntro();
 void APP_CoverFromTemperature(int estado_cortina, int cortina_manual);
 uint32_t APP_SoilHumidity();
-void APP_Irrigation(int rangohmin, int rangohmax);
+
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */

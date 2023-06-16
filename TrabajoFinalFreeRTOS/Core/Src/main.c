@@ -43,7 +43,7 @@ static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
 
 void AutomaticControlTask(void const * argument);
-void UserInterfaceTask(void const * argument);
+void StateMachineTask(void const * argument);
 void SensorsTask(void const * argument);
 void KeypadTask(void const * argument);
 
@@ -102,7 +102,7 @@ int main(void)
   AutomaticTaskHandle = osThreadCreate(osThread(AutomaticTask), NULL);
 
 
-  osThreadDef(InterfaceTask, UserInterfaceTask, osPriorityNormal, 0, 1024);
+  osThreadDef(InterfaceTask, StateMachineTask, osPriorityNormal, 0, 1024);
   InterfaceTaskHandle = osThreadCreate(osThread(InterfaceTask), NULL);
 
 
@@ -175,7 +175,7 @@ void AutomaticControlTask(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_UserInterfaceTask */
-void UserInterfaceTask(void const * argument)
+void StateMachineTask(void const * argument)
 {
   /* USER CODE BEGIN UserInterfaceTask */
 	int rx_key;

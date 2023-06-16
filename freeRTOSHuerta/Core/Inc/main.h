@@ -10,10 +10,6 @@ extern "C" {
 
 
 
-void APP_Timer10ms();
-void APP_Timer100ms();
-void APP_Timer1000ms();
-void APP_Timer10s();
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
@@ -23,12 +19,12 @@ void Error_Handler(void);
 void APP_Show_SystemIntro();
 void APP_Keypad(int rangohmin, int rangohmax, int estado_cortina, int cortina_manual);
 void APP_Show_DHT22();
-void APP_Show_Movement();
+
 void APP_CoverFromTemperature(int estado_cortina, int cortina_manual);
 uint8_t APP_SoilHumidity();
 void APP_Irrigation(int rangohmin, int rangohmax);
 
-void Error_Handler(void);
+
 
 #define PC14_OSC32_IN_Pin GPIO_PIN_14
 #define PC14_OSC32_IN_GPIO_Port GPIOC

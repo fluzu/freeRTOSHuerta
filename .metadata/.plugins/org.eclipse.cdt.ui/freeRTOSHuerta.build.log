@@ -1,9 +1,9 @@
-14:11:14 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
+08:07:11 **** Incremental Build of configuration Debug for project freeRTOSHuerta ****
 make -j4 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:50:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
-   50 |   xTaskCreate(KeypadTask, "KeypadTask", 512, NULL, 0, NULL);
+../Core/Src/main.c:32:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+   32 |   xTaskCreate(KeypadTask, "KeypadTask", 512, NULL, 0, NULL);
       |               ^~~~~~~~~~
       |               |
       |               void (*)(const void *)
@@ -12,8 +12,8 @@ In file included from ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:330:41: note: expected 'TaskFunction_t' {aka 'void (*)(void *)'} but argument is of type 'void (*)(const void *)'
   330 |  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
       |                          ~~~~~~~~~~~~~~~^~~~~~~~~~
-../Core/Src/main.c:51:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
-   51 |   xTaskCreate(SensorsTask, "SensorsTask", 512, NULL, 1, NULL);
+../Core/Src/main.c:33:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+   33 |   xTaskCreate(SensorsTask, "SensorsTask", 512, NULL, 2, NULL);
       |               ^~~~~~~~~~~
       |               |
       |               void (*)(const void *)
@@ -22,19 +22,9 @@ In file included from ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:330:41: note: expected 'TaskFunction_t' {aka 'void (*)(void *)'} but argument is of type 'void (*)(const void *)'
   330 |  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
       |                          ~~~~~~~~~~~~~~~^~~~~~~~~~
-../Core/Src/main.c:52:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
-   52 |   xTaskCreate(UserInterfaceTask, "UserInterfaceTask", 1280, NULL, 2, NULL);
-      |               ^~~~~~~~~~~~~~~~~
-      |               |
-      |               void (*)(const void *)
-In file included from ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:40,
-                 from ../Core/Src/main.c:5:
-../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:330:41: note: expected 'TaskFunction_t' {aka 'void (*)(void *)'} but argument is of type 'void (*)(const void *)'
-  330 |  BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
-      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~
-../Core/Src/main.c:53:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
-   53 |   xTaskCreate(AutomaticControlTask, "AutomaticControlTask", 1024, NULL, 3, NULL);
-      |               ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:34:15: warning: passing argument 1 of 'xTaskCreate' from incompatible pointer type [-Wincompatible-pointer-types]
+   34 |   xTaskCreate(StateMachineTask, "UserInterfaceTask", 1280, NULL, 1, NULL);
+      |               ^~~~~~~~~~~~~~~~
       |               |
       |               void (*)(const void *)
 In file included from ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:40,
@@ -48,11 +38,11 @@ Finished building target: freeRTOSHuerta.elf
 arm-none-eabi-size   freeRTOSHuerta.elf 
 arm-none-eabi-objdump -h -S  freeRTOSHuerta.elf  > "freeRTOSHuerta.list"
    text	   data	    bss	    dec	    hex	filename
-  40280	    148	  18948	  59376	   e7f0	freeRTOSHuerta.elf
+  35692	    132	  18876	  54700	   d5ac	freeRTOSHuerta.elf
 Finished building: default.size.stdout
  
 Finished building: freeRTOSHuerta.list
  
 
-14:11:18 Build Finished. 0 errors, 4 warnings. (took 3s.988ms)
+08:07:26 Build Finished. 0 errors, 3 warnings. (took 15s.458ms)
 
